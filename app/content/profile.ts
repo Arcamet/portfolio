@@ -47,5 +47,7 @@ export const siteConfig = {
   title: "Jose Carlos Arce Camet — Full-Stack and AI Application Portfolio",
   description:
     "Computer Engineering student at UTRGV building full-stack products, AI systems, audio tools, finance applications, workflow software, and accessible interfaces.",
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  siteUrl:
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    "https://jose-carlos-arce-portfolio.arcamet47.chatgpt.site",
 } as const;
