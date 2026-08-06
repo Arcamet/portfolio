@@ -29,7 +29,7 @@ export default function Home() {
       addressLocality: "McAllen",
       addressRegion: "TX",
     },
-    alumniOf: { "@type": "CollegeOrUniversity", name: profile.school },
+    affiliation: { "@type": "CollegeOrUniversity", name: profile.school },
     knowsLanguage: profile.languages,
     url: siteConfig.siteUrl,
   };
@@ -179,11 +179,6 @@ export default function Home() {
                 translating an idea into a working system, defining its data and
                 trust boundaries, and refining the experience until it feels
                 deliberate.
-              </p>
-              <p>
-                I use AI-assisted development tools as part of my workflow, but
-                I remain responsible for the requirements, architecture, review,
-                testing, verification, and final product decisions.
               </p>
               <Link className="text-link" href="/about">
                 More about my process <span aria-hidden="true">↗</span>

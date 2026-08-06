@@ -25,8 +25,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/og.png",
-        width: 1736,
-        height: 907,
+        width: 1200,
+        height: 630,
         alt: "Jose Carlos Arce Camet — full-stack products, AI systems, and interfaces with a point of view.",
       },
     ],
@@ -37,7 +37,15 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: ["/og.png"],
   },
-  icons: { icon: "/og.png", shortcut: "/og.png" },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+  },
 };
 
 export const viewport: Viewport = {

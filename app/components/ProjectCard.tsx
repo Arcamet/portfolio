@@ -1,12 +1,13 @@
 import Link from "next/link";
 import type { Project } from "../content/types";
+import { ExternalLink } from "./ExternalLink";
 import { ProjectVisual } from "./ProjectVisual";
 
 const statusLabels = {
-  available: "Available",
-  "release-prep": "Final release preparation",
-  "source-only": "Source only",
-  archived: "Archived",
+  "portfolio-ready": "Portfolio ready",
+  "release-prep": "Release preparation",
+  "source-published": "Source published",
+  live: "Live",
 } as const;
 
 export function ProjectCard({ project }: { project: Project }) {
@@ -48,15 +49,9 @@ export function ProjectCard({ project }: { project: Project }) {
             Read case study <span aria-hidden="true">↗</span>
           </Link>
           {project.links.map((link) => (
-            <a
-              key={link.kind}
-              href={link.href}
-              target="_blank"
-              rel="noreferrer"
-            >
+            <ExternalLink key={link.kind} href={link.href}>
               {link.label}
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
+            </ExternalLink>
           ))}
         </div>
       </div>

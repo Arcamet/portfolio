@@ -22,7 +22,7 @@ export const socialLinks: {
   resumeSoftware: string | null;
   resumeTechnical: string | null;
 } = {
-  github: null,
+  github: "https://github.com/Arcamet",
   linkedin: null,
   resumeSoftware: null,
   resumeTechnical: null,

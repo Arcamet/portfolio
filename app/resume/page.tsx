@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ExternalLink } from "../components/ExternalLink";
 import { orderedProjects } from "../content/projects";
 import { profile, socialLinks } from "../content/profile";
 
@@ -40,15 +41,9 @@ export default function ResumePage() {
             </a>
           ) : null}
           <a className="text-link" href={`mailto:${profile.email}`}>
-            Request a résumé copy <span aria-hidden="true">↗</span>
+            Email Jose about opportunities <span aria-hidden="true">↗</span>
           </a>
         </div>
-        {!socialLinks.resumeSoftware && !socialLinks.resumeTechnical ? (
-          <p className="configuration-note">
-            Download files are not configured yet. The verified résumé overview
-            remains available below.
-          </p>
-        ) : null}
       </header>
 
       <div className="resume-layout shell">
@@ -58,10 +53,10 @@ export default function ResumePage() {
             <a href={`mailto:${profile.email}`}>{profile.email}</a>
             <span>{profile.location}</span>
             {socialLinks.github ? (
-              <a href={socialLinks.github}>GitHub</a>
+              <ExternalLink href={socialLinks.github}>GitHub</ExternalLink>
             ) : null}
             {socialLinks.linkedin ? (
-              <a href={socialLinks.linkedin}>LinkedIn</a>
+              <ExternalLink href={socialLinks.linkedin}>LinkedIn</ExternalLink>
             ) : null}
           </section>
           <section>
@@ -77,24 +72,23 @@ export default function ResumePage() {
         </aside>
 
         <div className="resume-content">
-          <section aria-labelledby="software-resume-title">
-            <span className="meta-label">01 / Software engineering résumé</span>
-            <h2 id="software-resume-title">Project-led engineering profile.</h2>
+          <section aria-labelledby="engineering-profile-title">
+            <span className="meta-label">01 / Engineering profile</span>
+            <h2 id="engineering-profile-title">Project-led engineering.</h2>
             <p>
-              This version leads with full-stack architecture, AI application
-              workflows, correctness, accessibility, and testing. Download is
-              shown only after a verified file is configured.
+              I build complete software products across full-stack systems, AI
+              workflows, audio processing, financial correctness, and
+              interaction-heavy interfaces. My work emphasizes explicit system
+              boundaries, accessibility, testing, and user-owned data.
             </p>
           </section>
-          <section aria-labelledby="technical-resume-title">
-            <span className="meta-label">02 / General technical résumé</span>
-            <h2 id="technical-resume-title">
-              Broader technical and support context.
-            </h2>
+          <section aria-labelledby="direction-title">
+            <span className="meta-label">02 / Current direction</span>
+            <h2 id="direction-title">Software roles with product ownership.</h2>
             <p>
-              This version can support technical implementation or support
-              opportunities alongside software roles. No experience is invented
-              here while the source document is pending.
+              I am pursuing software-engineering internships and junior frontend
+              or full-stack roles where I can contribute across implementation,
+              review, verification, and product quality.
             </p>
           </section>
           <section aria-labelledby="project-highlights-title">
@@ -113,11 +107,6 @@ export default function ResumePage() {
                       </Link>
                     </h3>
                     <p>{project.tagline}</p>
-                    <ul>
-                      {project.resumeBullets.map((bullet) => (
-                        <li key={bullet}>{bullet}</li>
-                      ))}
-                    </ul>
                   </div>
                 </article>
               ))}

@@ -1,16 +1,5 @@
 import type { Project } from "./types";
 
-const placeholderImage = (name: string): Project["images"] => [
-  {
-    src: null,
-    alt: `${name} project screenshot is not yet configured.`,
-    width: 1600,
-    height: 1000,
-    caption: "Verified project screenshot pending",
-    priority: true,
-  },
-];
-
 export const projects: Project[] = [
   {
     slug: "yapos",
@@ -204,7 +193,65 @@ export const projects: Project[] = [
       "Where lexical retrieval stops being sufficient",
       "How provider failures remain outside database transactions",
     ],
-    images: placeholderImage("YapOS"),
+    engineeringTakeaways: [
+      "Deterministic routing makes provider cost, context assembly, and fallback behavior easier to inspect and test.",
+      "Approval-gated memory changes persistence from a hidden side effect into a user-controlled workflow.",
+      "Keeping provider calls outside database transactions reduces lock duration and contains network failure.",
+    ],
+    images: [
+      {
+        id: "yapos-dashboard",
+        src: "/images/projects/yapos/dashboard-desktop.png",
+        alt: "YapOS dashboard showing recent conversations, workspace tools, memory candidates, and system status.",
+        width: 1440,
+        height: 900,
+        caption: "Authenticated workspace dashboard",
+        role: "card",
+      },
+      {
+        id: "yapos-landing",
+        src: "/images/projects/yapos/landing-desktop.png",
+        alt: "YapOS landing page introducing the personal AI workspace and its operating modes.",
+        width: 1440,
+        height: 900,
+        caption: "Product landing page",
+        role: "hero",
+      },
+      {
+        id: "yapos-files",
+        src: "/images/projects/yapos/files-desktop.png",
+        alt: "YapOS files workspace for uploading documents and asking bounded grounded questions.",
+        width: 1440,
+        height: 900,
+        caption: "Document workspace and grounded-question flow",
+        role: "gallery",
+      },
+      {
+        id: "yapos-memory",
+        src: "/images/projects/yapos/memory-desktop.png",
+        alt: "YapOS memory workspace showing approved and pending personal memory controls.",
+        width: 1440,
+        height: 957,
+        caption: "Approval-gated memory workspace",
+        role: "gallery",
+      },
+      {
+        id: "yapos-chat-mobile",
+        src: "/images/projects/yapos/chat-mobile.png",
+        alt: "Mobile YapOS conversation showing a populated assistant exchange and compact composer.",
+        width: 390,
+        height: 844,
+        caption: "Populated conversation on mobile",
+        role: "mobile",
+      },
+    ],
+    futureImages: [
+      {
+        id: "yapos-populated-trace",
+        description:
+          "Desktop conversation capture with the full execution trace expanded after a reviewed response.",
+      },
+    ],
     links: [],
     seo: {
       title: "YapOS Case Study — Jose Carlos Arce Camet",
@@ -218,7 +265,7 @@ export const projects: Project[] = [
     name: "Auralis",
     category: "Audio system",
     year: "2026",
-    status: "available",
+    status: "portfolio-ready",
     tagline: "Explainable audio recognition with secure full-stack workflows.",
     summary:
       "An experimental audio-recognition application that analyzes microphone or uploaded clips, ranks an original catalog, and explains confidence through signal and score diagnostics.",
@@ -390,7 +437,58 @@ export const projects: Project[] = [
       "How file validation crosses multiple trust boundaries",
       "When synchronous processing should move to jobs",
     ],
-    images: placeholderImage("Auralis"),
+    engineeringTakeaways: [
+      "A bounded original catalog demonstrates real ranking behavior without overstating commercial recognition coverage.",
+      "Confidence becomes more useful when it exposes signal quality and distance from the runner-up, not just a top score.",
+      "Upload safety requires independent checks of bytes, container evidence, duration, and sample-rate boundaries.",
+    ],
+    images: [
+      {
+        id: "auralis-recognition-result",
+        src: "/images/projects/auralis/recognition-result.jpg",
+        alt: "Auralis recognition result with a ranked match, confidence explanation, and signal diagnostics.",
+        width: 1270,
+        height: 714,
+        caption: "Recognition result and confidence diagnostics",
+        role: "card",
+      },
+      {
+        id: "auralis-landing",
+        src: "/images/projects/auralis/landing.jpg",
+        alt: "Auralis landing page presenting microphone capture and upload recognition workflows.",
+        width: 1270,
+        height: 714,
+        caption: "Audio-recognition landing experience",
+        role: "hero",
+      },
+      {
+        id: "auralis-dashboard",
+        src: "/images/projects/auralis/dashboard.jpg",
+        alt: "Auralis private dashboard with recognition history, favorites, and usage summaries.",
+        width: 1270,
+        height: 714,
+        caption: "Private recognition dashboard",
+        role: "gallery",
+      },
+      {
+        id: "auralis-studio",
+        src: "/images/projects/auralis/studio-prepared.jpg",
+        alt: "Auralis studio prepared to record or upload a bounded audio clip for analysis.",
+        width: 1270,
+        height: 714,
+        caption: "Prepared capture and upload studio",
+        role: "gallery",
+      },
+      {
+        id: "auralis-mobile-deck",
+        src: "/images/projects/auralis/mobile-bottom-deck.jpg",
+        alt: "Mobile Auralis interface with its bottom action deck and audio workflow controls.",
+        width: 380,
+        height: 822,
+        caption: "Mobile recognition controls",
+        role: "mobile",
+      },
+    ],
     links: [],
     seo: {
       title: "Auralis Case Study — Jose Carlos Arce Camet",
@@ -404,7 +502,7 @@ export const projects: Project[] = [
     name: "Personal Finance Tracker",
     category: "Finance product",
     year: "2026",
-    status: "available",
+    status: "live",
     tagline:
       "Exact money calculations, accessible analytics, and user-owned financial data.",
     summary:
@@ -568,8 +666,61 @@ export const projects: Project[] = [
       "How stale async responses are prevented",
       "Why charts need table alternatives",
     ],
-    images: placeholderImage("Personal Finance Tracker"),
-    links: [],
+    engineeringTakeaways: [
+      "Integer-cent arithmetic keeps forms, budgets, charts, and exports aligned around exact money values.",
+      "Row Level Security is the ownership boundary; filtered client state is only a presentation concern.",
+      "Accessible analytics require the same values to remain available without relying on a chart or color encoding.",
+    ],
+    images: [
+      {
+        id: "finance-dashboard",
+        src: "/images/projects/personal-finance-tracker/dashboard-desktop.jpg",
+        alt: "Personal Finance Tracker dashboard with balances, income, expenses, categories, and monthly budget progress.",
+        width: 1426,
+        height: 990,
+        caption: "Authenticated financial overview",
+        role: "card",
+      },
+      {
+        id: "finance-login",
+        src: "/images/projects/personal-finance-tracker/login-desktop.jpg",
+        alt: "Personal Finance Tracker sign-in page with its secure account access panel.",
+        width: 1440,
+        height: 1000,
+        caption: "Secure account entry",
+        role: "hero",
+      },
+      {
+        id: "finance-transactions",
+        src: "/images/projects/personal-finance-tracker/transactions-desktop.jpg",
+        alt: "Transaction manager showing the add form, cash-flow summary, filters, and CSV export.",
+        width: 1426,
+        height: 990,
+        caption: "Transaction management and defensive export",
+        role: "gallery",
+      },
+      {
+        id: "finance-dashboard-mobile",
+        src: "/images/projects/personal-finance-tracker/dashboard-mobile.jpg",
+        alt: "Mobile Personal Finance Tracker dashboard with responsive financial summary cards.",
+        width: 375,
+        height: 814,
+        caption: "Responsive dashboard on mobile",
+        role: "mobile",
+      },
+    ],
+    links: [
+      {
+        label: "View live product",
+        href: "https://personal-finance-tracker-taupe-nine.vercel.app/",
+        kind: "live",
+      },
+      {
+        label: "View source on GitHub",
+        href: "https://github.com/Arcamet/personal-finance-tracker",
+        kind: "source",
+      },
+    ],
     seo: {
       title: "Personal Finance Tracker Case Study — Jose Carlos Arce Camet",
       description:
@@ -582,7 +733,7 @@ export const projects: Project[] = [
     name: "Intern Hunt CRM",
     category: "Workflow software",
     year: "2026",
-    status: "available",
+    status: "source-published",
     tagline:
       "A private recruiting pipeline for applications, follow-ups, and interview milestones.",
     summary:
@@ -607,7 +758,7 @@ export const projects: Project[] = [
       "Supabase Row Level Security",
       "Smart views and analytics",
       "Activity history",
-      "Sample workspace",
+      "Private workflow model",
     ],
     overview: [
       "Intern Hunt CRM is a database-backed recruiting workspace for managing internship and job applications from initial sourcing through interviews and decisions.",
@@ -635,9 +786,9 @@ export const projects: Project[] = [
           "Search, filters, sorting, and dashboard analytics reveal the state of a personal pipeline.",
       },
       {
-        title: "Sample workspace",
+        title: "Activity generation",
         description:
-          "A local-persistence mode demonstrates the full workflow without requiring an account.",
+          "Meaningful application changes produce a structured history for later review.",
       },
     ],
     architecture: {
@@ -705,10 +856,12 @@ export const projects: Project[] = [
       },
     ],
     testing: [
-      "Vitest coverage for workflow logic",
-      "Repository behavior across live and sample modes",
-      "Recruiting-stage date validation",
-      "Form refresh regression checks",
+      "Form validation and application-field mapping",
+      "Recruiting-stage date ordering",
+      "Smart views, search, sorting, and filters",
+      "Pipeline analytics calculations",
+      "Activity generation from meaningful changes",
+      "Preservation of unsaved edits during data refresh",
     ],
     accessibility: [
       "Labeled forms and validation relationships",
@@ -746,8 +899,29 @@ export const projects: Project[] = [
       "Where activity history needs transactionality",
       "When client-side analytics stops fitting",
     ],
-    images: placeholderImage("Intern Hunt CRM"),
-    links: [],
+    engineeringTakeaways: [
+      "Stage and date ordering rules belong in reusable workflow logic so forms and analytics share the same assumptions.",
+      "Identity-aware query keys prevent private and alternate data modes from sharing stale cached records.",
+      "Preserving dirty form fields during refresh separates server freshness from ownership of in-progress user edits.",
+    ],
+    images: [
+      {
+        id: "intern-hunt-dashboard-study",
+        src: "/images/projects/intern-hunt-crm/dashboard-overview.svg",
+        alt: "Conceptual Intern Hunt CRM dashboard study with pipeline totals, status distribution, deadlines, and funnel statistics.",
+        width: 1600,
+        height: 960,
+        caption: "Interface study — conceptual dashboard composition",
+        role: "study",
+      },
+    ],
+    links: [
+      {
+        label: "View source on GitHub",
+        href: "https://github.com/Arcamet/intern-hunt-crm",
+        kind: "source",
+      },
+    ],
     seo: {
       title: "Intern Hunt CRM Case Study — Jose Carlos Arce Camet",
       description:
@@ -760,7 +934,7 @@ export const projects: Project[] = [
     name: "Local Matchroom",
     category: "Interactive frontend",
     year: "2026",
-    status: "available",
+    status: "live",
     tagline:
       "Accessible local chess built on a replayable move-log architecture.",
     summary:
@@ -930,8 +1104,52 @@ export const projects: Project[] = [
       "What Playwright geometry tests catch",
       "Why chess.js integration is not a custom engine",
     ],
-    images: placeholderImage("Local Matchroom"),
-    links: [],
+    engineeringTakeaways: [
+      "A replayable move log keeps the board, SAN history, captures, turn, and result derived from one serializable source.",
+      "A chessboard can remain pointer-friendly while using grid semantics, roving focus, and explicit announcements for keyboard play.",
+      "Responsive geometry and focus behavior require real-browser verification beyond reducer and DOM-only tests.",
+    ],
+    images: [
+      {
+        id: "matchroom-piece-study",
+        src: "/images/projects/local-matchroom/rose-court-piece-gallery.png",
+        alt: "Rose Court chess-piece study showing original light and dark pieces at board, silhouette, and interaction scales.",
+        width: 1440,
+        height: 2334,
+        caption: "Original Rose Court piece system",
+        role: "card",
+      },
+      {
+        id: "matchroom-desktop",
+        src: "/images/projects/local-matchroom/local-matchroom-desktop.png",
+        alt: "Local Matchroom desktop interface with a complete chessboard, match status, captures, and notation log.",
+        width: 1440,
+        height: 1596,
+        caption: "Desktop local-match interface",
+        role: "hero",
+      },
+      {
+        id: "matchroom-mobile",
+        src: "/images/projects/local-matchroom/local-matchroom-mobile.png",
+        alt: "Local Matchroom mobile layout with the chessboard and stacked match information panels.",
+        width: 390,
+        height: 1533,
+        caption: "Responsive local match on mobile",
+        role: "mobile",
+      },
+    ],
+    links: [
+      {
+        label: "View live product",
+        href: "https://local-matchroom.vercel.app/",
+        kind: "live",
+      },
+      {
+        label: "View source on GitHub",
+        href: "https://github.com/Arcamet/local-matchroom",
+        kind: "source",
+      },
+    ],
     seo: {
       title: "Local Matchroom Case Study — Jose Carlos Arce Camet",
       description:

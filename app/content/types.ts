@@ -1,5 +1,5 @@
 export type ProjectStatus =
-  "available" | "release-prep" | "source-only" | "archived";
+  "portfolio-ready" | "release-prep" | "source-published" | "live";
 
 export type ProjectCategory =
   | "AI application"
@@ -15,12 +15,18 @@ export interface ProjectLink {
 }
 
 export interface ProjectImage {
-  src: string | null;
+  id: string;
+  src: string;
   alt: string;
   width: number;
   height: number;
   caption: string;
-  priority?: boolean;
+  role: "card" | "hero" | "gallery" | "mobile" | "study";
+}
+
+export interface FutureProjectImage {
+  id: string;
+  description: string;
 }
 
 export interface ContentItem {
@@ -68,7 +74,9 @@ export interface Project {
   futureWork: string[];
   resumeBullets: string[];
   interviewTopics: string[];
+  engineeringTakeaways: string[];
   images: ProjectImage[];
+  futureImages?: FutureProjectImage[];
   links: ProjectLink[];
   seo: {
     title: string;

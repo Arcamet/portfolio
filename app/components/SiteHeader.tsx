@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRef, useState, useSyncExternalStore } from "react";
 import { navigation, profile, socialLinks } from "../content/profile";
+import { ExternalLink } from "./ExternalLink";
 
 const subscribeToHydration = () => () => {};
 
@@ -11,6 +12,7 @@ export function SiteHeader() {
   const pathname = usePathname();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const hydrated = useSyncExternalStore(
     subscribeToHydration,
@@ -24,6 +26,7 @@ export function SiteHeader() {
     dialog.showModal();
     document.body.dataset.menuOpen = "true";
     setMenuOpen(true);
+    closeButtonRef.current?.focus();
   }
 
   function closeMenu() {
@@ -90,13 +93,21 @@ export function SiteHeader() {
           aria-modal="true"
           aria-labelledby="menu-title"
           onClose={handleClosed}
-          onCancel={() => setMenuOpen(false)}
+          onCancel={(event) => {
+            event.preventDefault();
+            closeMenu();
+          }}
         >
           <div className="mobile-menu-head">
             <p id="menu-title" className="meta-label">
               Navigation index
             </p>
-            <button className="menu-close" type="button" onClick={closeMenu}>
+            <button
+              ref={closeButtonRef}
+              className="menu-close"
+              type="button"
+              onClick={closeMenu}
+            >
               Close
             </button>
           </div>
@@ -111,10 +122,10 @@ export function SiteHeader() {
           <div className="mobile-menu-utilities">
             <a href={`mailto:${profile.email}`}>Email Jose</a>
             {socialLinks.github ? (
-              <a href={socialLinks.github}>GitHub</a>
+              <ExternalLink href={socialLinks.github}>GitHub</ExternalLink>
             ) : null}
             {socialLinks.linkedin ? (
-              <a href={socialLinks.linkedin}>LinkedIn</a>
+              <ExternalLink href={socialLinks.linkedin}>LinkedIn</ExternalLink>
             ) : null}
           </div>
         </dialog>

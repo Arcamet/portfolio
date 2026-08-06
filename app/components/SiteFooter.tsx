@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { profile, socialLinks } from "../content/profile";
+import { ExternalLink } from "./ExternalLink";
 
 export function SiteFooter() {
   return (
@@ -18,9 +19,11 @@ export function SiteFooter() {
           <a href={`mailto:${profile.email}`}>Email</a>
           <Link href="/resume">Résumé</Link>
           <Link href="/about">About</Link>
-          {socialLinks.github ? <a href={socialLinks.github}>GitHub</a> : null}
+          {socialLinks.github ? (
+            <ExternalLink href={socialLinks.github}>GitHub</ExternalLink>
+          ) : null}
           {socialLinks.linkedin ? (
-            <a href={socialLinks.linkedin}>LinkedIn</a>
+            <ExternalLink href={socialLinks.linkedin}>LinkedIn</ExternalLink>
           ) : null}
         </nav>
       </div>

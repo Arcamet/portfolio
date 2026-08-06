@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArchitectureDiagram } from "../../components/ArchitectureDiagram";
+import { ExternalLink } from "../../components/ExternalLink";
+import { ProjectGallery } from "../../components/ProjectGallery";
 import { ProjectVisual } from "../../components/ProjectVisual";
 import { StructuredData } from "../../components/StructuredData";
 import {
@@ -12,10 +14,10 @@ import {
 import { siteConfig } from "../../content/profile";
 
 const statusLabels = {
-  available: "Available",
-  "release-prep": "Final release preparation",
-  "source-only": "Source only",
-  archived: "Archived",
+  "portfolio-ready": "Portfolio ready",
+  "release-prep": "Release preparation",
+  "source-published": "Source published",
+  live: "Live",
 } as const;
 
 export function generateStaticParams() {
@@ -42,8 +44,8 @@ export async function generateMetadata({
       images: [
         {
           url: "/og.png",
-          width: 1736,
-          height: 907,
+          width: 1200,
+          height: 630,
           alt: `${project.name} case study by Jose Carlos Arce Camet.`,
         },
       ],
@@ -93,6 +95,7 @@ export default async function ProjectPage({
   const project = getProject(slug);
   if (!project) notFound();
   const related = getRelatedProject(project);
+  const hasGallery = project.images.some((image) => image.role !== "study");
   const softwareData = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -122,13 +125,13 @@ export default async function ProjectPage({
             <p>{project.summary}</p>
             <div className="case-actions">
               {project.links.map((link) => (
-                <a
+                <ExternalLink
                   className="button button-primary"
                   key={link.kind}
                   href={link.href}
                 >
                   {link.label}
-                </a>
+                </ExternalLink>
               ))}
               <Link className="text-link" href="/#work">
                 Back to selected work
@@ -207,10 +210,10 @@ export default async function ProjectPage({
           >
             <div className="case-section-label">
               <span>05</span>
-              <span>Architecture</span>
+              <span>System layers</span>
             </div>
             <div className="case-section-content">
-              <h2 id="architecture-title">System shape</h2>
+              <h2 id="architecture-title">System layers</h2>
               <p className="section-lede">{project.architecture.summary}</p>
               <ArchitectureDiagram project={project} />
             </div>
@@ -353,57 +356,46 @@ export default async function ProjectPage({
             </div>
           </section>
 
-          <section
-            className="case-section"
-            id="gallery"
-            aria-labelledby="gallery-title"
-          >
-            <div className="case-section-label">
-              <span>11</span>
-              <span>Screenshot gallery</span>
-            </div>
-            <div className="case-section-content">
-              <h2 id="gallery-title">Verified visuals</h2>
-              <p className="section-lede">
-                Product screenshots have not yet been configured. The
-                placeholder below is labeled intentionally and can be replaced
-                through the centralized image record.
-              </p>
-              <ProjectVisual project={project} />
-            </div>
-          </section>
+          {hasGallery ? (
+            <section
+              className="case-section"
+              id="gallery"
+              aria-labelledby="gallery-title"
+            >
+              <div className="case-section-label">
+                <span>11</span>
+                <span>Product gallery</span>
+              </div>
+              <div className="case-section-content">
+                <h2 id="gallery-title">Verified product views</h2>
+                <p className="section-lede">
+                  Genuine captures from the implemented product across core
+                  workflows and responsive layouts.
+                </p>
+                <ProjectGallery project={project} />
+              </div>
+            </section>
+          ) : null}
 
           <section
             className="case-section"
-            id="interview"
-            aria-labelledby="interview-title"
+            id="takeaways"
+            aria-labelledby="takeaways-title"
           >
             <div className="case-section-label">
               <span>12</span>
-              <span>Interview notes</span>
+              <span>Engineering takeaways</span>
             </div>
             <div className="case-section-content">
-              <h2 id="interview-title">
-                Résumé bullets and discussion topics.
-              </h2>
-              <div className="interview-grid">
-                <article>
-                  <h3>Résumé bullets</h3>
-                  <ul>
-                    {project.resumeBullets.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </article>
-                <article>
-                  <h3>Interview topics</h3>
-                  <ul>
-                    {project.interviewTopics.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </article>
-              </div>
+              <h2 id="takeaways-title">What the implementation clarified.</h2>
+              <ol className="takeaway-list">
+                {project.engineeringTakeaways.map((item, index) => (
+                  <li key={item}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <p>{item}</p>
+                  </li>
+                ))}
+              </ol>
             </div>
           </section>
         </div>
