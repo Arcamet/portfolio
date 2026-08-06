@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
 import {
   getProject,
   getRelatedProject,
@@ -27,21 +28,83 @@ describe("portfolio content", () => {
 
   it("has complete accessible content and honest external links", () => {
     for (const project of projects) {
-      expect(project.images.every((image) => image.alt.length > 0)).toBe(true);
+      expect(project.images.length).toBeGreaterThan(0);
+      expect(project.images.every((image) => image.id.length > 0)).toBe(true);
+      expect(project.images.every((image) => image.src.startsWith("/"))).toBe(
+        true,
+      );
+      expect(project.images.every((image) => image.alt.length > 20)).toBe(true);
+      expect(project.images.every((image) => image.width > 0)).toBe(true);
+      expect(project.images.every((image) => image.height > 0)).toBe(true);
+      expect(new Set(project.images.map((image) => image.id)).size).toBe(
+        project.images.length,
+      );
+      expect(
+        project.images.some((image) => ["card", "study"].includes(image.role)),
+      ).toBe(true);
+      expect(
+        project.images.some((image) => ["hero", "study"].includes(image.role)),
+      ).toBe(true);
       expect(project.limitations.length).toBeGreaterThan(0);
+      expect(project.engineeringTakeaways).toHaveLength(3);
       expect(
         project.links.every((link) => link.href.startsWith("https://")),
       ).toBe(true);
     }
   });
 
-  it("uses the verified contact address and null placeholders", () => {
+  it("uses verified public links and honest release states", () => {
     expect(profile.email).toBe("josecarlos.arce@outlook.com");
     expect(socialLinks).toEqual({
-      github: null,
+      github: "https://github.com/Arcamet",
       linkedin: null,
       resumeSoftware: null,
       resumeTechnical: null,
     });
+    expect(
+      Object.fromEntries(
+        projects.map((project) => [project.slug, project.status]),
+      ),
+    ).toEqual({
+      yapos: "release-prep",
+      auralis: "portfolio-ready",
+      "personal-finance-tracker": "live",
+      "intern-hunt-crm": "source-published",
+      "local-matchroom": "live",
+    });
+    expect(getProject("personal-finance-tracker")?.links).toEqual([
+      {
+        label: "View live product",
+        href: "https://personal-finance-tracker-taupe-nine.vercel.app/",
+        kind: "live",
+      },
+      {
+        label: "View source on GitHub",
+        href: "https://github.com/Arcamet/personal-finance-tracker",
+        kind: "source",
+      },
+    ]);
+  });
+
+  it("keeps Intern Hunt claims aligned with verified test coverage", () => {
+    expect(getProject("intern-hunt-crm")?.testing).toEqual([
+      "Form validation and application-field mapping",
+      "Recruiting-stage date ordering",
+      "Smart views, search, sorting, and filters",
+      "Pipeline analytics calculations",
+      "Activity generation from meaningful changes",
+      "Preservation of unsaved edits during data refresh",
+    ]);
+  });
+
+  it("keeps public copy free of unfinished-state language", () => {
+    const publicContent = JSON.stringify({ projects, profile, socialLinks });
+    expect(publicContent).not.toMatch(
+      /image pending|not configured|placeholder|download files are/i,
+    );
+
+    const homeSource = readFileSync("app/page.tsx", "utf8");
+    expect(homeSource).toContain("affiliation");
+    expect(homeSource).not.toContain("alumniOf");
   });
 });

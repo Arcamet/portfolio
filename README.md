@@ -45,19 +45,11 @@ Project content includes explicit current boundaries. External links render only
 
 ## Project imagery
 
-Verified screenshots are intentionally not fabricated. Until real assets are supplied, each project uses a clearly labeled visual placeholder.
-
-To replace one:
-
-1. Add an optimized WebP or AVIF asset under `public/images/projects/<slug>/`.
-2. Update the project’s `images` record in `app/content/projects.ts` with the public path, accurate alt text, intrinsic width and height, and a factual caption.
-3. Keep sensitive or personally identifying data out of screenshots.
-
-Recommended first assets are the YapOS dashboard and chat trace, the Auralis recognition result, the finance dashboard, the Intern Hunt CRM dashboard, and an active Local Matchroom game.
+The project galleries use genuine captures from the underlying applications. Each centralized image record includes a stable ID, role, intrinsic dimensions, meaningful alternative text, and a factual caption. Intern Hunt CRM uses one explicitly labeled interface study outside its screenshot gallery because a genuine product capture is not available.
 
 ## Résumé and links
 
-The centralized values in `app/content/profile.ts` currently remain `null` for GitHub, LinkedIn, and both résumé downloads. This prevents dead or invented links from appearing.
+The centralized values in `app/content/profile.ts` contain the verified GitHub profile. LinkedIn and both résumé downloads remain `null`, which prevents dead or invented links from appearing.
 
 Add verified values to:
 
@@ -72,7 +64,7 @@ Place résumé PDFs under `public/resume/` when ready and use root-relative path
 
 ## Accessibility
 
-The site includes a skip link, semantic landmarks, visible focus, native modal mobile navigation with Escape and focus restoration, reduced-motion and forced-colors support, text-first diagrams, labeled image placeholders, 44px-class controls, and a responsive 320px layout. Playwright covers mobile navigation, horizontal overflow, keyboard-visible content, and axe scans on critical routes.
+The site includes a skip link, semantic landmarks, visible focus, deterministic modal focus, Escape and focus restoration, reduced-motion and forced-colors support, semantic system-layer lists, 44px-class controls, and a responsive 320px layout. Playwright covers mobile navigation, horizontal overflow, failed images, keyboard-visible content, and axe scans on critical routes.
 
 ## Metadata and social previews
 
@@ -86,14 +78,9 @@ The project preserves `.openai/hosting.json` and the Sites Vite plugin for Cloud
 
 No runtime secrets, backend, database, analytics, or unavailable environment values are required.
 
-## Known placeholders
+## Verified public links
 
-- GitHub profile URL
-- LinkedIn profile URL
-- Software-engineering résumé PDF
-- General technical/support résumé PDF
-- Verified screenshots for all five projects
-- Public live and source links for individual projects
+The portfolio links to the GitHub profile, live Personal Finance Tracker, live Local Matchroom, and published source repositories for Personal Finance Tracker, Intern Hunt CRM, and Local Matchroom. Unverified project deployments and profile destinations are intentionally omitted.
 
 ## License
 

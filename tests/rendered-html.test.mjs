@@ -32,10 +32,39 @@ test("server-renders the finished homepage", async () => {
 });
 
 test("server-renders a case study and secondary routes", async () => {
-  for (const path of ["/projects/yapos", "/about", "/resume", "/404"]) {
+  for (const path of [
+    "/projects/yapos",
+    "/projects/auralis",
+    "/projects/personal-finance-tracker",
+    "/projects/intern-hunt-crm",
+    "/projects/local-matchroom",
+    "/about",
+    "/resume",
+    "/404",
+  ]) {
     const response = await render(path);
     assert.equal(response.status, 200, path);
     const html = await response.text();
     assert.doesNotMatch(html, /href=["']#["']/i);
+    assert.doesNotMatch(
+      html,
+      /image pending|not configured|placeholder|download files are/i,
+    );
+    assert.doesNotMatch(html, /alumniOf/);
   }
+});
+
+test("renders verified galleries and keeps internal notes private", async () => {
+  const yapos = await (await render("/projects/yapos")).text();
+  assert.match(yapos, /Product gallery/);
+  assert.match(yapos, /dashboard-desktop\.png/);
+  assert.match(yapos, /chat-mobile\.png/);
+  assert.doesNotMatch(yapos, /Résumé bullets|Interview topics/);
+
+  const internHunt = await (await render("/projects/intern-hunt-crm")).text();
+  assert.match(internHunt, /Interface study/);
+  assert.doesNotMatch(internHunt, /id="gallery"/);
+
+  const resume = await (await render("/resume")).text();
+  assert.doesNotMatch(resume, /Résumé bullets|Interview topics/);
 });
