@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ExternalLink } from "./components/ExternalLink";
 import { ProjectCard } from "./components/ProjectCard";
 import { SectionHeading } from "./components/SectionHeading";
 import { StructuredData } from "./components/StructuredData";
@@ -234,10 +235,12 @@ export default function Home() {
                 View résumé
               </Link>
               {socialLinks.github ? (
-                <a href={socialLinks.github}>GitHub</a>
+                <ExternalLink href={socialLinks.github}>GitHub</ExternalLink>
               ) : null}
               {socialLinks.linkedin ? (
-                <a href={socialLinks.linkedin}>LinkedIn</a>
+                <ExternalLink href={socialLinks.linkedin}>
+                  LinkedIn
+                </ExternalLink>
               ) : null}
             </div>
           </div>

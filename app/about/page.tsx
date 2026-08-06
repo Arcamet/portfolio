@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ExternalLink } from "../components/ExternalLink";
 import { capabilities } from "../content/capabilities";
 import { principles, profile, socialLinks } from "../content/profile";
 
@@ -134,9 +135,11 @@ export default function AboutPage() {
         <div>
           <a href={`mailto:${profile.email}`}>{profile.email}</a>
           <Link href="/resume">View résumé</Link>
-          {socialLinks.github ? <a href={socialLinks.github}>GitHub</a> : null}
+          {socialLinks.github ? (
+            <ExternalLink href={socialLinks.github}>GitHub</ExternalLink>
+          ) : null}
           {socialLinks.linkedin ? (
-            <a href={socialLinks.linkedin}>LinkedIn</a>
+            <ExternalLink href={socialLinks.linkedin}>LinkedIn</ExternalLink>
           ) : null}
         </div>
       </section>

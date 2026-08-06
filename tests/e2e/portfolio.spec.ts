@@ -51,11 +51,21 @@ test("mobile menu closes with Escape and restores focus", async ({ page }) => {
 });
 
 test("verified external links disclose new tabs", async ({ page }) => {
-  await page.goto("/projects/personal-finance-tracker");
-  for (const link of await page.locator('a[target="_blank"]').all()) {
-    await expect(link).toHaveAttribute("rel", "noreferrer");
-    await expect(link).toContainText("opens in a new tab");
-    await expect(link).toHaveAttribute("href", /^https:\/\//);
+  for (const path of [
+    "/",
+    "/about",
+    "/resume",
+    "/projects/personal-finance-tracker",
+    "/projects/intern-hunt-crm",
+    "/projects/local-matchroom",
+  ]) {
+    await page.goto(path);
+    const externalLinks = page.locator('a[href^="https://"]');
+    for (const link of await externalLinks.all()) {
+      await expect(link).toHaveAttribute("target", "_blank");
+      await expect(link).toHaveAttribute("rel", "noreferrer");
+      await expect(link).toContainText("opens in a new tab");
+    }
   }
 });
 
