@@ -1,0 +1,39 @@
+<svg width="1600" height="960" viewBox="0 0 1600 960" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="960" rx="32" fill="#071019"/>
+  <rect x="44" y="44" width="280" height="872" rx="28" fill="#0D1622" stroke="#243041"/>
+  <rect x="92" y="94" width="184" height="54" rx="18" fill="#0F766E"/>
+  <rect x="92" y="196" width="184" height="52" rx="18" fill="#132132"/>
+  <rect x="92" y="266" width="184" height="52" rx="18" fill="#101826"/>
+  <rect x="360" y="44" width="1196" height="120" rx="28" fill="#0D1622" stroke="#243041"/>
+  <rect x="360" y="200" width="278" height="180" rx="28" fill="#0D1622" stroke="#243041"/>
+  <rect x="668" y="200" width="278" height="180" rx="28" fill="#0D1622" stroke="#243041"/>
+  <rect x="976" y="200" width="278" height="180" rx="28" fill="#0D1622" stroke="#243041"/>
+  <rect x="1284" y="200" width="272" height="180" rx="28" fill="#0D1622" stroke="#243041"/>
+  <rect x="360" y="416" width="704" height="500" rx="28" fill="#0D1622" stroke="#243041"/>
+  <rect x="1096" y="416" width="460" height="240" rx="28" fill="#0D1622" stroke="#243041"/>
+  <rect x="1096" y="676" width="460" height="240" rx="28" fill="#0D1622" stroke="#243041"/>
+  <path d="M512 712C569.333 676.667 627.333 659 686 659C744.667 659 806.333 687.333 871 744L936 648" stroke="#2DD4BF" stroke-width="18" stroke-linecap="round"/>
+  <path d="M582 536C607.6 536 628 515.6 628 490C628 464.4 607.6 444 582 444C556.4 444 536 464.4 536 490C536 515.6 556.4 536 582 536Z" fill="#0F766E"/>
+  <path d="M752 612C777.6 612 798 591.6 798 566C798 540.4 777.6 520 752 520C726.4 520 706 540.4 706 566C706 591.6 726.4 612 752 612Z" fill="#22D3EE"/>
+  <path d="M936 676C961.6 676 982 655.6 982 630C982 604.4 961.6 584 936 584C910.4 584 890 604.4 890 630C890 655.6 910.4 676 936 676Z" fill="#38BDF8"/>
+  <circle cx="1228" cy="534" r="84" fill="#0F766E"/>
+  <circle cx="1318" cy="534" r="66" fill="#243041"/>
+  <circle cx="1228" cy="534" r="42" fill="#0D1622"/>
+  <rect x="1144" y="718" width="364" height="42" rx="21" fill="#142132"/>
+  <rect x="1144" y="780" width="284" height="42" rx="21" fill="#142132"/>
+  <rect x="1144" y="842" width="324" height="42" rx="21" fill="#142132"/>
+  <text x="94" y="128" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700">Intern Hunt CRM</text>
+  <text x="402" y="108" fill="#7F92AB" font-family="Arial, sans-serif" font-size="22">Workspace</text>
+  <text x="402" y="146" fill="white" font-family="Arial, sans-serif" font-size="42" font-weight="700">Dashboard</text>
+  <text x="402" y="252" fill="#7F92AB" font-family="Arial, sans-serif" font-size="20">Total tracked</text>
+  <text x="402" y="330" fill="white" font-family="Arial, sans-serif" font-size="64" font-weight="700">24</text>
+  <text x="710" y="252" fill="#7F92AB" font-family="Arial, sans-serif" font-size="20">Active pipeline</text>
+  <text x="710" y="330" fill="white" font-family="Arial, sans-serif" font-size="64" font-weight="700">17</text>
+  <text x="1018" y="252" fill="#7F92AB" font-family="Arial, sans-serif" font-size="20">Interview rounds</text>
+  <text x="1018" y="330" fill="white" font-family="Arial, sans-serif" font-size="64" font-weight="700">5</text>
+  <text x="1326" y="252" fill="#7F92AB" font-family="Arial, sans-serif" font-size="20">Offers</text>
+  <text x="1326" y="330" fill="white" font-family="Arial, sans-serif" font-size="64" font-weight="700">2</text>
+  <text x="402" y="470" fill="white" font-family="Arial, sans-serif" font-size="34" font-weight="700">Status distribution</text>
+  <text x="1138" y="470" fill="white" font-family="Arial, sans-serif" font-size="34" font-weight="700">Upcoming deadlines</text>
+  <text x="1138" y="730" fill="white" font-family="Arial, sans-serif" font-size="34" font-weight="700">Funnel stats</text>
+</svg>
