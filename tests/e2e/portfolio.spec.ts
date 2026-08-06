@@ -103,6 +103,12 @@ test("project galleries use real assets without failed requests", async ({
 test("favicon and manifest assets resolve", async ({ page, request }) => {
   await page.goto("/");
   await expect(page.locator('link[rel~="icon"]')).toHaveCount(4);
+  const homepage = await request.get("/");
+  expect(homepage.headers()["x-content-type-options"]).toBe("nosniff");
+  expect(homepage.headers()["x-frame-options"]).toBe("DENY");
+  expect(homepage.headers()["content-security-policy"]).toContain(
+    "frame-ancestors 'none'",
+  );
   for (const path of [
     "/favicon.ico",
     "/icon-192.png",
