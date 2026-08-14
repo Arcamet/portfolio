@@ -23,7 +23,7 @@ export const socialLinks: {
   resumeTechnical: string | null;
 } = {
   github: "https://github.com/Arcamet",
-  linkedin: null,
+  linkedin: "https://www.linkedin.com/in/jose-carlos-arce-camet/",
   resumeSoftware: null,
   resumeTechnical: null,
 };
@@ -43,11 +43,16 @@ export const principles = [
   "Use design to clarify—not obscure—the product.",
 ] as const;
 
+const vercelProductionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : null;
+
 export const siteConfig = {
   title: "Jose Carlos Arce Camet — Full-Stack and AI Application Portfolio",
   description:
     "Computer Engineering student at UTRGV building full-stack products, AI systems, audio tools, finance applications, workflow software, and accessible interfaces.",
   siteUrl:
     process.env.NEXT_PUBLIC_SITE_URL ??
-    "https://jose-carlos-arce-portfolio.arcamet47.chatgpt.site",
+    vercelProductionUrl ??
+    "http://localhost:3000",
 } as const;

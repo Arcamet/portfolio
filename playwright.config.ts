@@ -10,6 +10,7 @@ export default defineConfig({
   webServer: {
     command: "npm run dev -- -p 4173",
     url: "http://localhost:4173",
+    env: { NEXT_PUBLIC_SITE_URL: "http://localhost:4173" },
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },

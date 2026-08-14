@@ -6,7 +6,7 @@ import {
   orderedProjects,
   projects,
 } from "../app/content/projects";
-import { profile, socialLinks } from "../app/content/profile";
+import { profile, siteConfig, socialLinks } from "../app/content/profile";
 
 describe("portfolio content", () => {
   it("keeps five projects in unique rank order", () => {
@@ -57,7 +57,7 @@ describe("portfolio content", () => {
     expect(profile.email).toBe("josecarlos.arce@outlook.com");
     expect(socialLinks).toEqual({
       github: "https://github.com/Arcamet",
-      linkedin: null,
+      linkedin: "https://www.linkedin.com/in/jose-carlos-arce-camet/",
       resumeSoftware: null,
       resumeTechnical: null,
     });
@@ -141,5 +141,13 @@ describe("portfolio content", () => {
     const homeSource = readFileSync("app/page.tsx", "utf8");
     expect(homeSource).toContain("affiliation");
     expect(homeSource).not.toContain("alumniOf");
+  });
+
+  it("keeps hosting metadata neutral and Vercel-ready", () => {
+    expect(siteConfig.siteUrl).toMatch(/^https?:\/\//);
+
+    const vercelConfig = JSON.parse(readFileSync("vercel.json", "utf8"));
+    expect(vercelConfig.framework).toBe("nextjs");
+    expect(vercelConfig.buildCommand).toBe("npm run build:vercel");
   });
 });

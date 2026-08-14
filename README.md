@@ -10,7 +10,7 @@ A recruiter-facing software-engineering portfolio that presents five distinct pr
 - Vitest for content integrity
 - Node render tests for production HTML
 - Playwright and axe-core for critical browser paths
-- Sites/Cloudflare-compatible build output with Vercel headers included
+- Vinext/Vite local tooling with a standard Next.js production build on Vercel
 
 ## Local setup
 
@@ -49,7 +49,7 @@ The project galleries use genuine captures from the underlying applications. Eac
 
 ## Résumé and links
 
-The centralized values in `app/content/profile.ts` contain the verified GitHub profile. LinkedIn and both résumé downloads remain `null` because the final PDF files are not present in this checkout; this prevents dead or invented links from appearing.
+The centralized values in `app/content/profile.ts` contain the verified GitHub and LinkedIn profiles. Both résumé downloads remain `null` because the final PDF files are not present in this checkout; this prevents dead or invented links from appearing.
 
 Add verified values to:
 
@@ -70,11 +70,11 @@ The site includes a skip link, semantic landmarks, visible focus, deterministic 
 
 Each route defines a unique title, description, canonical path, Open Graph fields, and X/Twitter fields. The project includes robots, sitemap, manifest, `Person`, and `SoftwareApplication` structured data. The bespoke social card lives at `public/og.png`.
 
-Set `NEXT_PUBLIC_SITE_URL` to the final production origin before a non-Sites deployment so canonical URLs and structured data use the correct host.
+Set `NEXT_PUBLIC_SITE_URL` to the final Vercel production origin so canonical URLs and structured data use the correct host. Vercel's `VERCEL_PROJECT_PRODUCTION_URL` system value is used as a deployment fallback; local development falls back to `http://localhost:3000`.
 
 ## Deployment
 
-The project preserves `.openai/hosting.json` and the Sites Vite plugin for Cloudflare-compatible publication. `vercel.json` and `next.config.ts` also define conservative browser security headers for Vercel deployment.
+Vercel is the production deployment target. `vercel.json` runs the standard Next.js production build, while the Vinext/Vite commands remain available for local development and compatibility verification. `vercel.json` and `next.config.ts` define the same conservative browser security headers.
 
 No runtime secrets, backend, database, analytics, or unavailable environment values are required.
 
@@ -83,13 +83,14 @@ No runtime secrets, backend, database, analytics, or unavailable environment val
 Verified destinations in the portfolio:
 
 - GitHub profile: [Arcamet](https://github.com/Arcamet)
+- LinkedIn: [Jose Carlos Arce Camet](https://www.linkedin.com/in/jose-carlos-arce-camet/)
 - Personal Finance Tracker: [live product](https://personal-finance-tracker-taupe-nine.vercel.app/) and [source](https://github.com/Arcamet/personal-finance-tracker)
 - YapOS: [live product](https://yapos-web.vercel.app/) and [source](https://github.com/Arcamet/yapos)
 - Auralis: [source](https://github.com/Arcamet/auralis) only; no production deployment is claimed
 - Intern Hunt CRM: [live product](https://intern-hunt-crm.vercel.app/) with a working sample workspace, plus [source](https://github.com/Arcamet/intern-hunt-crm)
 - Local Matchroom: [live product](https://local-matchroom.vercel.app/) and [source](https://github.com/Arcamet/local-matchroom)
 
-LinkedIn remains `null` until an actual profile URL is supplied. All rendered external project links use HTTPS.
+All rendered external project and professional-profile links use verified HTTPS destinations.
 
 ## License
 
