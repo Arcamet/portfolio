@@ -31,6 +31,7 @@ npm run typecheck       # TypeScript without output
 npm run test            # Vitest content tests
 npm run build           # production build
 npm run test:render     # server-rendered HTML checks (after build)
+npm run build:vercel    # Next.js production build used by Vercel
 npm run test:e2e        # Playwright + axe critical paths
 ```
 
@@ -60,7 +61,12 @@ socialLinks.resumeSoftware;
 socialLinks.resumeTechnical;
 ```
 
-Place résumé PDFs under `public/resume/` when ready and use root-relative paths such as `/resume/jose-arce-software-engineering.pdf`.
+The release paths are prepared as:
+
+- `public/resume/Jose_Carlos_Arce_Camet_SWE_Resume.pdf`
+- `public/resume/Jose_Carlos_Arce_Camet_Remote_Tech_Resume.pdf`
+
+When both final files are present, assign `resumePaths.software` and `resumePaths.technical` to the corresponding `socialLinks` values. Until then, the links remain `null` so the site cannot publish broken downloads.
 
 ## Accessibility
 

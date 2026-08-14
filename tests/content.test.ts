@@ -6,7 +6,12 @@ import {
   orderedProjects,
   projects,
 } from "../app/content/projects";
-import { profile, siteConfig, socialLinks } from "../app/content/profile";
+import {
+  profile,
+  resumePaths,
+  siteConfig,
+  socialLinks,
+} from "../app/content/profile";
 
 describe("portfolio content", () => {
   it("keeps five projects in unique rank order", () => {
@@ -62,6 +67,14 @@ describe("portfolio content", () => {
       resumeTechnical: null,
     });
     expect(profile.school).toBe("The University of Texas Rio Grande Valley");
+    expect(profile.degree).toBe("Bachelor of Science in Computer Engineering");
+    expect(profile.availability).toBe(
+      "Seeking software engineering, full-stack, and AI application opportunities.",
+    );
+    expect(resumePaths).toEqual({
+      software: "/resume/Jose_Carlos_Arce_Camet_SWE_Resume.pdf",
+      technical: "/resume/Jose_Carlos_Arce_Camet_Remote_Tech_Resume.pdf",
+    });
     expect(
       Object.fromEntries(
         projects.map((project) => [project.slug, project.status]),

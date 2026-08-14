@@ -4,7 +4,7 @@ export const profile = {
   location: "McAllen, Texas",
   school: "The University of Texas Rio Grande Valley",
   schoolShort: "UTRGV",
-  degree: "B.S. Computer Engineering",
+  degree: "Bachelor of Science in Computer Engineering",
   expectedGraduation: "Fall 2027",
   languages: ["English", "Spanish"],
   email: "josecarlos.arce@outlook.com",
@@ -13,7 +13,12 @@ export const profile = {
   identity:
     "Computer Engineering student building full-stack products, AI systems, audio tools, and distinctive interfaces.",
   availability:
-    "Available for software-engineering internships, junior roles, remote or hybrid technical work, and selected freelance projects.",
+    "Seeking software engineering, full-stack, and AI application opportunities.",
+} as const;
+
+export const resumePaths = {
+  software: "/resume/Jose_Carlos_Arce_Camet_SWE_Resume.pdf",
+  technical: "/resume/Jose_Carlos_Arce_Camet_Remote_Tech_Resume.pdf",
 } as const;
 
 export const socialLinks: {
