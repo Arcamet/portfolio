@@ -16,9 +16,9 @@ test("homepage presents identity and project order", async ({ page }) => {
   );
   const names = await page.locator(".project-card h3").allTextContents();
   expect(names).toEqual([
+    "Personal Finance Tracker",
     "YapOS",
     "Auralis",
-    "Personal Finance Tracker",
     "Intern Hunt CRM",
     "Local Matchroom",
   ]);
@@ -74,6 +74,10 @@ test("project galleries use real assets without failed requests", async ({
 }) => {
   for (const slug of projectSlugs) {
     await page.goto(`/projects/${slug}`);
+    await expect(page.locator(".case-visual img")).not.toHaveAttribute(
+      "loading",
+      "lazy",
+    );
     const images = page.locator("img");
     for (let index = 0; index < (await images.count()); index += 1) {
       const image = images.nth(index);
@@ -133,6 +137,59 @@ test("320px layout has no horizontal overflow and reduced motion keeps content v
   );
   expect(overflow).toBe(false);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+});
+
+test("phone, tablet, and desktop layouts stay within the viewport", async ({
+  page,
+}) => {
+  for (const width of [390, 768, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const path of ["/", "/projects/personal-finance-tracker", "/resume"]) {
+      await page.goto(path);
+      expect(
+        await page.evaluate(
+          () =>
+            document.documentElement.scrollWidth <=
+            document.documentElement.clientWidth,
+        ),
+        `${path} at ${width}px`,
+      ).toBe(true);
+    }
+  }
+});
+
+test("keyboard focus is visible and critical navigation has no console errors", async ({
+  page,
+}) => {
+  const errors: string[] = [];
+  page.on("console", (message) => {
+    if (message.type() === "error") errors.push(message.text());
+  });
+  page.on("pageerror", (error) => errors.push(error.message));
+
+  await page.goto("/");
+  await page.keyboard.press("Tab");
+  const skipLink = page.getByRole("link", { name: "Skip to main content" });
+  await expect(skipLink).toBeFocused();
+  await expect(skipLink).toBeVisible();
+
+  await page
+    .getByRole("link", { name: "Personal Finance Tracker", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/projects\/personal-finance-tracker$/);
+  await page.getByRole("link", { name: "Back to selected work" }).click();
+  await expect(page).toHaveURL(/\/#work$/);
+  expect(errors).toEqual([]);
+});
+
+test("unknown routes return the custom 404 experience", async ({ page }) => {
+  const response = await page.goto("/this-route-does-not-exist");
+  expect(response?.status()).toBe(404);
+  await expect(
+    page.getByRole("heading", {
+      name: "This page is outside the current archive.",
+    }),
+  ).toBeVisible();
 });
 
 for (const path of [

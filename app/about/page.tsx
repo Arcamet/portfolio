@@ -20,7 +20,7 @@ export default function AboutPage() {
           I build software from the <em>system boundary inward.</em>
         </h1>
         <p className="page-lede">
-          I’m Jose Carlos Arce Camet, a Computer Engineering student at the
+          I’m Jose Carlos Arce Camet, a Computer Engineering student at The
           University of Texas Rio Grande Valley.
         </p>
       </header>
@@ -70,10 +70,9 @@ export default function AboutPage() {
             thoughtful interaction.
           </p>
           <p>
-            I use AI-assisted development tools as part of my workflow. I direct
-            the requirements, architecture, and product decisions; review and
-            verify generated work; test the finished system; and remain
-            responsible for understanding and explaining the implementation.
+            I use AI-assisted development tools as accelerators while owning the
+            requirements, architecture, product decisions, review, verification,
+            testing, and understanding of the final implementation.
           </p>
           <p>
             I’m currently pursuing software-engineering internships, junior

@@ -3,11 +3,11 @@ import type { Project } from "./types";
 export const projects: Project[] = [
   {
     slug: "yapos",
-    rank: 1,
+    rank: 2,
     name: "YapOS",
     category: "AI application",
     year: "2026",
-    status: "release-prep",
+    status: "live",
     tagline:
       "Inspectable personal AI with approved memory and selective response evaluation.",
     summary:
@@ -170,7 +170,7 @@ export const projects: Project[] = [
       "Validated document and request payloads",
     ],
     limitations: [
-      "Final public deployment is not yet verified",
+      "Authenticated workflows require a real account; the public landing page explains the implemented system without demo credentials",
       "Local file storage requires persistent server storage",
       "Rate and concurrency controls are process-local",
       "Retrieval is lexical, not semantic",
@@ -178,10 +178,10 @@ export const projects: Project[] = [
       "No autonomous agents or multi-agent system",
     ],
     futureWork: [
-      "Align normal chat attachments with the dedicated Files workflow",
-      "Persist and reload execution traces consistently",
-      "Correct the reviewed-response metric",
-      "Move file storage to a durable production adapter",
+      "Replace local storage with an S3-compatible adapter for multi-instance deployment",
+      "Move process-local rate and concurrency state to a shared store only when horizontal scaling is required",
+      "Add OCR if scanned PDFs become an explicitly supported input",
+      "Add richer database-backed integration fixtures around a disposable PostgreSQL test database",
     ],
     resumeBullets: [
       "Designed a provider-independent AI orchestration layer with deterministic modes, bounded context, selective evaluation, and safe fallbacks.",
@@ -252,7 +252,18 @@ export const projects: Project[] = [
           "Desktop conversation capture with the full execution trace expanded after a reviewed response.",
       },
     ],
-    links: [],
+    links: [
+      {
+        label: "View live product",
+        href: "https://yapos-web.vercel.app/",
+        kind: "live",
+      },
+      {
+        label: "View source on GitHub",
+        href: "https://github.com/Arcamet/yapos",
+        kind: "source",
+      },
+    ],
     seo: {
       title: "YapOS Case Study — Jose Carlos Arce Camet",
       description:
@@ -261,11 +272,11 @@ export const projects: Project[] = [
   },
   {
     slug: "auralis",
-    rank: 2,
+    rank: 3,
     name: "Auralis",
     category: "Audio system",
     year: "2026",
-    status: "portfolio-ready",
+    status: "source-published",
     tagline: "Explainable audio recognition with secure full-stack workflows.",
     summary:
       "An experimental audio-recognition application that analyzes microphone or uploaded clips, ranks an original catalog, and explains confidence through signal and score diagnostics.",
@@ -489,7 +500,13 @@ export const projects: Project[] = [
         role: "mobile",
       },
     ],
-    links: [],
+    links: [
+      {
+        label: "View source on GitHub",
+        href: "https://github.com/Arcamet/auralis",
+        kind: "source",
+      },
+    ],
     seo: {
       title: "Auralis Case Study — Jose Carlos Arce Camet",
       description:
@@ -498,7 +515,7 @@ export const projects: Project[] = [
   },
   {
     slug: "personal-finance-tracker",
-    rank: 3,
+    rank: 1,
     name: "Personal Finance Tracker",
     category: "Finance product",
     year: "2026",
@@ -524,10 +541,10 @@ export const projects: Project[] = [
     highlights: [
       "Integer-cent calculations",
       "Database constraints and RLS",
+      "155 tests / 91.55% coverage",
       "Monthly budgets",
       "Defensive CSV export",
       "Accessible analytics",
-      "Extensive automated testing",
     ],
     overview: [
       "An authenticated personal-finance workspace for recording income and expenses, managing monthly spending targets, analyzing cash flow, and exporting filtered history.",
@@ -624,6 +641,8 @@ export const projects: Project[] = [
       },
     ],
     testing: [
+      "26 test files with 155 passing tests",
+      "91.55% statement and line coverage, 85.46% branch coverage, and 92.74% function coverage",
       "Pure financial-rule tests",
       "React Testing Library coverage for critical controls",
       "Race-condition regression checks",
@@ -733,7 +752,7 @@ export const projects: Project[] = [
     name: "Intern Hunt CRM",
     category: "Workflow software",
     year: "2026",
-    status: "source-published",
+    status: "live",
     tagline:
       "A private recruiting pipeline for applications, follow-ups, and interview milestones.",
     summary:
@@ -916,6 +935,11 @@ export const projects: Project[] = [
       },
     ],
     links: [
+      {
+        label: "View live product",
+        href: "https://intern-hunt-crm.vercel.app/",
+        kind: "live",
+      },
       {
         label: "View source on GitHub",
         href: "https://github.com/Arcamet/intern-hunt-crm",

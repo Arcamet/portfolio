@@ -103,6 +103,7 @@ export default async function ProjectPage({
     description: project.summary,
     applicationCategory: project.category,
     author: { "@type": "Person", name: "Jose Carlos Arce Camet" },
+    sameAs: project.links.map((link) => link.href),
     url: `${siteConfig.siteUrl}/projects/${project.slug}`,
   };
 

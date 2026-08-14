@@ -15,7 +15,7 @@ A recruiter-facing software-engineering portfolio that presents five distinct pr
 ## Local setup
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
@@ -49,7 +49,7 @@ The project galleries use genuine captures from the underlying applications. Eac
 
 ## Résumé and links
 
-The centralized values in `app/content/profile.ts` contain the verified GitHub profile. LinkedIn and both résumé downloads remain `null`, which prevents dead or invented links from appearing.
+The centralized values in `app/content/profile.ts` contain the verified GitHub profile. LinkedIn and both résumé downloads remain `null` because the final PDF files are not present in this checkout; this prevents dead or invented links from appearing.
 
 Add verified values to:
 
@@ -80,7 +80,16 @@ No runtime secrets, backend, database, analytics, or unavailable environment val
 
 ## Verified public links
 
-The portfolio links to the GitHub profile, live Personal Finance Tracker, live Local Matchroom, and published source repositories for Personal Finance Tracker, Intern Hunt CRM, and Local Matchroom. Unverified project deployments and profile destinations are intentionally omitted.
+Verified destinations in the portfolio:
+
+- GitHub profile: [Arcamet](https://github.com/Arcamet)
+- Personal Finance Tracker: [live product](https://personal-finance-tracker-taupe-nine.vercel.app/) and [source](https://github.com/Arcamet/personal-finance-tracker)
+- YapOS: [live product](https://yapos-web.vercel.app/) and [source](https://github.com/Arcamet/yapos)
+- Auralis: [source](https://github.com/Arcamet/auralis) only; no production deployment is claimed
+- Intern Hunt CRM: [live product](https://intern-hunt-crm.vercel.app/) with a working sample workspace, plus [source](https://github.com/Arcamet/intern-hunt-crm)
+- Local Matchroom: [live product](https://local-matchroom.vercel.app/) and [source](https://github.com/Arcamet/local-matchroom)
+
+LinkedIn remains `null` until an actual profile URL is supplied. All rendered external project links use HTTPS.
 
 ## License
 

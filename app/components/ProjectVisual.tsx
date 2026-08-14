@@ -16,6 +16,8 @@ export function ProjectVisual({
 
   if (!image) return null;
 
+  const isCaseStudyHero = !compact;
+
   return (
     <figure className={`project-visual project-visual-${image.role}`}>
       <Image
@@ -23,7 +25,8 @@ export function ProjectVisual({
         alt={image.alt}
         width={image.width}
         height={image.height}
-        loading="lazy"
+        loading={isCaseStudyHero ? "eager" : "lazy"}
+        fetchPriority={isCaseStudyHero ? "high" : undefined}
         decoding="async"
         unoptimized
         sizes={

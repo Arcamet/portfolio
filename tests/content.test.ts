@@ -61,15 +61,16 @@ describe("portfolio content", () => {
       resumeSoftware: null,
       resumeTechnical: null,
     });
+    expect(profile.school).toBe("The University of Texas Rio Grande Valley");
     expect(
       Object.fromEntries(
         projects.map((project) => [project.slug, project.status]),
       ),
     ).toEqual({
-      yapos: "release-prep",
-      auralis: "portfolio-ready",
+      yapos: "live",
+      auralis: "source-published",
       "personal-finance-tracker": "live",
-      "intern-hunt-crm": "source-published",
+      "intern-hunt-crm": "live",
       "local-matchroom": "live",
     });
     expect(getProject("personal-finance-tracker")?.links).toEqual([
@@ -84,6 +85,40 @@ describe("portfolio content", () => {
         kind: "source",
       },
     ]);
+    expect(getProject("yapos")?.links).toEqual([
+      {
+        label: "View live product",
+        href: "https://yapos-web.vercel.app/",
+        kind: "live",
+      },
+      {
+        label: "View source on GitHub",
+        href: "https://github.com/Arcamet/yapos",
+        kind: "source",
+      },
+    ]);
+    expect(getProject("auralis")?.links).toEqual([
+      {
+        label: "View source on GitHub",
+        href: "https://github.com/Arcamet/auralis",
+        kind: "source",
+      },
+    ]);
+    expect(getProject("intern-hunt-crm")?.links).toEqual([
+      {
+        label: "View live product",
+        href: "https://intern-hunt-crm.vercel.app/",
+        kind: "live",
+      },
+      {
+        label: "View source on GitHub",
+        href: "https://github.com/Arcamet/intern-hunt-crm",
+        kind: "source",
+      },
+    ]);
+    expect(getProject("personal-finance-tracker")?.highlights).toContain(
+      "155 tests / 91.55% coverage",
+    );
   });
 
   it("keeps Intern Hunt claims aligned with verified test coverage", () => {

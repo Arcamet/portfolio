@@ -32,6 +32,7 @@ export default function Home() {
     },
     affiliation: { "@type": "CollegeOrUniversity", name: profile.school },
     knowsLanguage: profile.languages,
+    sameAs: [socialLinks.github].filter((link) => link !== null),
     url: siteConfig.siteUrl,
   };
 

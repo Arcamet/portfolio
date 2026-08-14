@@ -2,7 +2,7 @@ export const profile = {
   name: "Jose Carlos Arce Camet",
   initials: "JC",
   location: "McAllen, Texas",
-  school: "University of Texas Rio Grande Valley",
+  school: "The University of Texas Rio Grande Valley",
   schoolShort: "UTRGV",
   degree: "B.S. Computer Engineering",
   expectedGraduation: "Fall 2027",
