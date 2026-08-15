@@ -29,8 +29,8 @@ export const socialLinks: {
 } = {
   github: "https://github.com/Arcamet",
   linkedin: "https://www.linkedin.com/in/jose-carlos-arce-camet/",
-  resumeSoftware: null,
-  resumeTechnical: null,
+  resumeSoftware: resumePaths.software,
+  resumeTechnical: resumePaths.technical,
 };
 
 export const navigation = [

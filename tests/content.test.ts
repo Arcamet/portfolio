@@ -63,8 +63,8 @@ describe("portfolio content", () => {
     expect(socialLinks).toEqual({
       github: "https://github.com/Arcamet",
       linkedin: "https://www.linkedin.com/in/jose-carlos-arce-camet/",
-      resumeSoftware: null,
-      resumeTechnical: null,
+      resumeSoftware: "/resume/Jose_Carlos_Arce_Camet_SWE_Resume.pdf",
+      resumeTechnical: "/resume/Jose_Carlos_Arce_Camet_Remote_Tech_Resume.pdf",
     });
     expect(profile.school).toBe("The University of Texas Rio Grande Valley");
     expect(profile.degree).toBe("Bachelor of Science in Computer Engineering");

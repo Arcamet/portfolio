@@ -50,7 +50,7 @@ The project galleries use genuine captures from the underlying applications. Eac
 
 ## Résumé and links
 
-The centralized values in `app/content/profile.ts` contain the verified GitHub and LinkedIn profiles. Both résumé downloads remain `null` because the final PDF files are not present in this checkout; this prevents dead or invented links from appearing.
+The centralized values in `app/content/profile.ts` contain the verified GitHub and LinkedIn profiles plus active links to both final résumé PDFs.
 
 Add verified values to:
 
@@ -66,7 +66,7 @@ The release paths are prepared as:
 - `public/resume/Jose_Carlos_Arce_Camet_SWE_Resume.pdf`
 - `public/resume/Jose_Carlos_Arce_Camet_Remote_Tech_Resume.pdf`
 
-When both final files are present, assign `resumePaths.software` and `resumePaths.technical` to the corresponding `socialLinks` values. Until then, the links remain `null` so the site cannot publish broken downloads.
+The corresponding `socialLinks` values use these release paths, so the software and technical/support download buttons are active.
 
 ## Accessibility
 
