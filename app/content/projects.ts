@@ -1180,6 +1180,608 @@ export const projects: Project[] = [
         "Accessible local chess built with a replayable move log, chess.js integration, keyboard interaction, and browser-tested responsive geometry.",
     },
   },
+  {
+    slug: "rustkv",
+    rank: 6,
+    name: "RustKV",
+    category: "Systems software",
+    year: "2026",
+    status: "source-published",
+    tagline:
+      "A persistent key-value server in Rust with a bounded binary protocol and crash-conscious storage.",
+    summary:
+      "A single-node TCP key-value service with concurrent clients, synchronized shared state, TTLs, a CRC32 append-only log, restart replay, compaction, and structured metrics.",
+    role: "Systems design, protocol and persistence engineering, concurrency, testing, benchmarking, and CI.",
+    featured: false,
+    accent: "orange",
+    evidenceLabel: "Durability and concurrency",
+    stack: [
+      "Rust",
+      "TCP sockets",
+      "Arc / RwLock / Mutex",
+      "CRC32",
+      "tracing",
+      "Criterion",
+      "GitHub Actions",
+    ],
+    highlights: [
+      "Bounded binary TCP protocol",
+      "CRC32 append-only log",
+      "Torn-tail repair on restart",
+      "Crash-conscious compaction",
+      "Real-socket integration tests",
+      "Windows and Linux CI",
+    ],
+    overview: [
+      "RustKV is a compact persistent network key-value server: one process, one node, a deterministic binary protocol, concurrent TCP clients, synchronized shared state, an append-only log, TTLs, compaction, metrics, tests, and reproducible benchmarks.",
+      "It is a systems-programming project, not a Redis replacement. Its scope is deliberately small so that ownership, locking, durability ordering, and recovery behavior stay visible.",
+    ],
+    problem: [
+      "A key-value store looks simple until it has to survive concurrent clients, malformed network input, and a crash in the middle of a write. Each of those failure modes needs an explicit, testable answer rather than an assumption.",
+    ],
+    solution: [
+      "RustKV frames every request in a versioned 1 MiB length-prefixed protocol, serves each connection on a capped OS thread, shares state through Arc with RwLock and Mutex under a documented lock order, and writes every effective mutation to a CRC32-protected log with sync_data before memory changes and before success is returned.",
+    ],
+    features: [
+      {
+        title: "Bounded binary protocol",
+        description:
+          "Versioned length-prefixed frames with deterministic handling of malformed, oversized, and partial input.",
+      },
+      {
+        title: "Concurrent connections",
+        description:
+          "Persistent TCP connections served by capped thread-per-connection admission with graceful shutdown.",
+      },
+      {
+        title: "Durable append-only log",
+        description:
+          "CRC32 records, ordered restart replay, truncated-tail repair, and fail-closed handling of interior corruption.",
+      },
+      {
+        title: "TTLs and compaction",
+        description:
+          "Absolute-expiry persistence that does not resurrect expired overwrites, plus crash-conscious log compaction.",
+      },
+    ],
+    architecture: {
+      summary:
+        "Each connection thread decodes frames and hands commands to an executor that operates on a shared Arc<Database>. The store sits behind an RwLock, the append log behind a Mutex, and runtime counters are atomics exposed through STATS.",
+      nodes: [
+        {
+          id: "client",
+          label: "CLI / client",
+          description: "rustkv-cli and the client library speak framed TCP.",
+          group: "client",
+        },
+        {
+          id: "connection",
+          label: "Connection thread",
+          description:
+            "Capped admission, persistent sockets, and shutdown checks.",
+          group: "server",
+        },
+        {
+          id: "codec",
+          label: "Codec + executor",
+          description:
+            "Frame validation and command execution against shared state.",
+          group: "shared",
+        },
+        {
+          id: "store",
+          label: "RwLock store",
+          description: "Binary-safe keys and values with TTL visibility.",
+          group: "data",
+        },
+        {
+          id: "log",
+          label: "Append-only log",
+          description:
+            "CRC32 records, sync_data ordering, replay, and compaction.",
+          group: "data",
+        },
+      ],
+    },
+    challenges: [
+      {
+        title: "Recovering from a torn write",
+        description:
+          "A final incomplete record is discarded at the last known-good boundary, while complete corrupt records stop startup instead of being silently skipped.",
+      },
+      {
+        title: "Compaction across rename states",
+        description:
+          "Log replacement uses replacement and backup states so an interrupted compaction can be recovered on Windows as well as Unix.",
+      },
+    ],
+    decisions: [
+      {
+        title: "Threads instead of async",
+        description:
+          "One capped OS thread per connection keeps ownership, blocking I/O, and lock behavior explicit.",
+        tradeoff:
+          "Simpler to reason about, but connection count is bounded by threads rather than an event loop.",
+      },
+      {
+        title: "Sync before acknowledge",
+        description:
+          "A mutation reaches disk before memory changes and before the client sees success.",
+        tradeoff:
+          "Serializes mutations and pauses readers during disk sync in exchange for clear durability ordering.",
+      },
+      {
+        title: "Fail closed on corruption",
+        description:
+          "Interior checksum failures stop startup rather than serving partially recovered data.",
+      },
+      {
+        title: "No throughput claims without context",
+        description:
+          "Benchmark numbers are only reported alongside the machine, mode, build profile, and workload that produced them.",
+      },
+    ],
+    testing: [
+      "Unit tests for store, protocol, and persistence behavior",
+      "Real-socket integration tests with concurrent clients",
+      "Malformed-frame, failure, and graceful-shutdown cases",
+      "Restart and persistence-recovery tests against real temporary files",
+      "Format, Clippy, test, release build, and benchmark compilation on Windows and Linux CI",
+    ],
+    accessibility: [
+      "Command-line interface with plain-text output",
+      "Documented protocol, persistence, and concurrency behavior",
+    ],
+    security: [
+      "Bounded 1 MiB frames reject oversized input",
+      "Deterministic handling of malformed and partial frames",
+      "Binds to 127.0.0.1 by default",
+      "Capped connection admission",
+    ],
+    limitations: [
+      "Single process and single node",
+      "No authentication, TLS, replication, clustering, or transactions",
+      "One OS thread per active connection",
+      "Synchronous persistence serializes mutations",
+      "Expired entries can occupy memory until a mutation, recovery, or compaction",
+      "Does not claim ACID semantics",
+    ],
+    futureWork: [
+      "Add parser fuzzing and property-based tests",
+      "Add configurable group commit or a dedicated persistence writer",
+      "Add background active expiration",
+    ],
+    resumeBullets: [
+      "Built a persistent key-value service in Rust with a bounded binary TCP protocol, concurrent connection threads, Arc/RwLock synchronization, TTLs, and structured runtime metrics.",
+      "Engineered a CRC32 append-only log with synchronous mutation ordering, restart replay, torn-tail repair, corruption detection, and crash-conscious compaction across Windows rename states.",
+      "Developed unit and real-socket integration coverage for malformed frames, concurrent clients, graceful shutdown, persistence recovery, and failure cases; automated format, Clippy, test, build, and benchmark compilation checks on Windows and Linux.",
+    ],
+    interviewTopics: [
+      "Why thread-per-connection instead of async",
+      "What sync_data ordering does and does not guarantee",
+      "How torn-tail repair differs from corruption handling",
+      "How compaction survives an interrupted rename",
+    ],
+    engineeringTakeaways: [
+      "Durability is an ordering problem: the log write and sync must happen before memory changes and before the client is told the write succeeded.",
+      "Treating a torn final record differently from interior corruption lets recovery be forgiving where it is safe and strict where it is not.",
+      "A documented lock order turns shared-state concurrency from an implicit habit into something reviewable and testable.",
+    ],
+    images: [
+      {
+        id: "rustkv-system-diagram",
+        src: "/images/projects/rustkv/system-diagram.svg",
+        alt: "RustKV system diagram showing a client sending framed TCP requests to a connection thread, codec, and executor that share a database of an RwLock store, a Mutex append log, and atomic metrics backed by disk.",
+        width: 1600,
+        height: 960,
+        caption: "Request path from TCP frame to durable log",
+        role: "diagram",
+      },
+    ],
+    links: [
+      {
+        label: "View source on GitHub",
+        href: "https://github.com/Arcamet/RustKV",
+        kind: "source",
+      },
+    ],
+    seo: {
+      title: "RustKV Case Study — Jose Carlos Arce Camet",
+      description:
+        "A persistent Rust key-value server with a bounded binary TCP protocol, concurrent clients, a CRC32 append-only log, and crash-conscious recovery.",
+    },
+  },
+  {
+    slug: "arcshell",
+    rank: 7,
+    name: "ArcShell",
+    category: "Systems software",
+    year: "2026",
+    status: "source-published",
+    tagline:
+      "A small POSIX shell in C built directly on fork, exec, pipes, and signals.",
+    summary:
+      "A deliberately small shell that implements pipelines, redirection, background jobs, zombie-free reaping, and a defensible signal model from raw process-control syscalls.",
+    role: "Design, C implementation, process and signal modeling, testing, and sanitizer verification.",
+    featured: false,
+    accent: "lime",
+    evidenceLabel: "Process control",
+    stack: ["C", "POSIX", "Linux / WSL2", "gcc", "Make", "ASan / UBSan"],
+    highlights: [
+      "Multi-stage pipelines",
+      "Redirection < > >>",
+      "Zombie-free child reaping",
+      "Shell survives Ctrl-C",
+      "41/41 functional tests",
+      "Clean ASan/UBSan run",
+    ],
+    overview: [
+      "ArcShell is a small POSIX shell written in C to demonstrate operating-systems and process-control fundamentals: process creation, file descriptors, pipes, redirection, signals, exit status, background execution, and zombie-free child reaping.",
+      "It is not a Bash clone. The feature set is deliberately small so every behavior can be explained and defended.",
+    ],
+    problem: [
+      "Most shell work happens through a shell rather than on top of one. Writing one from fork(), execvp(), pipe(), dup2(), waitpid(), sigaction(), and setpgid() forces direct engagement with process lifecycle, descriptor ownership, and signal semantics that are otherwise easy to wave away.",
+    ],
+    solution: [
+      "ArcShell tokenizes and parses each line into a pipeline, runs cd, pwd, and exit directly in the shell process, and executes everything else by opening N−1 pipes, forking each stage, wiring descriptors with dup2(), and closing every pipe end it does not need.",
+    ],
+    features: [
+      {
+        title: "Pipelines and redirection",
+        description:
+          "Multi-stage pipelines such as cat file | grep foo | wc -l, with per-stage <, >, and >> redirection.",
+      },
+      {
+        title: "Background execution",
+        description:
+          "A trailing & runs the job in its own process group, reaped asynchronously by a SIGCHLD handler.",
+      },
+      {
+        title: "Signal-safe prompt",
+        description:
+          "The shell survives Ctrl-C and Ctrl-\\ while a foreground child remains interruptible.",
+      },
+      {
+        title: "Explicit error handling",
+        description:
+          "Malformed syntax reports an error and returns to the prompt; exit status propagates as 0–255 or 128 + signal.",
+      },
+    ],
+    architecture: {
+      summary:
+        "A raw line flows through tokenize() and parse_line() into a Pipeline of commands. A lone foreground builtin runs in the shell process; everything else goes to execute_pipeline(), which forks, wires, and waits for each stage.",
+      nodes: [
+        {
+          id: "input",
+          label: "REPL input",
+          description:
+            "Interactive prompt, or silent when stdin is not a terminal.",
+          group: "client",
+        },
+        {
+          id: "parser",
+          label: "Tokenizer + parser",
+          description:
+            "Words, double quotes, pipes, redirection, and syntax errors.",
+          group: "shared",
+        },
+        {
+          id: "builtins",
+          label: "Builtins",
+          description: "cd, pwd, and exit mutate shell-owned state.",
+          group: "server",
+        },
+        {
+          id: "executor",
+          label: "Pipeline executor",
+          description: "pipe, fork, dup2, execvp, and waitpid per stage.",
+          group: "server",
+        },
+        {
+          id: "signals",
+          label: "Signal policy",
+          description:
+            "SIGINT/SIGQUIT handling, SIGCHLD reaping, and process groups.",
+          group: "external",
+        },
+      ],
+    },
+    challenges: [
+      {
+        title: "Pipe descriptor ownership",
+        description:
+          "Every child closes every pipe descriptor after dup2(), and the parent closes all of them once stages are spawned, so no stray write end keeps a reader from seeing EOF.",
+      },
+      {
+        title: "Reaping without races",
+        description:
+          "SIGCHLD is blocked around each foreground fork and wait so the asynchronous reaper cannot race the foreground's explicit waitpid() calls.",
+      },
+    ],
+    decisions: [
+      {
+        title: "Builtins only as a lone foreground stage",
+        description:
+          "cd | wc and pwd & are rejected rather than given ambiguous fork-based semantics.",
+      },
+      {
+        title: "Reset signals before exec",
+        description:
+          "Children restore SIGINT and SIGQUIT to their defaults so programs launched by the shell stay interruptible.",
+      },
+      {
+        title: "Process groups only for background jobs",
+        description:
+          "setpgid() isolates background jobs from terminal-generated signals without implementing full job control.",
+        tradeoff:
+          "No fg, bg, or terminal handoff, in exchange for a small model that can be fully explained.",
+      },
+      {
+        title: "Small, explicit grammar",
+        description:
+          "Unsupported syntax is rejected or left literal rather than silently reinterpreted.",
+      },
+    ],
+    testing: [
+      "41/41 functional tests passing",
+      "Signal tests, including a real Ctrl-C keystroke through a pty",
+      "File-descriptor and zombie regression test across repeated pipelines and background jobs",
+      "Clean AddressSanitizer and UndefinedBehaviorSanitizer run",
+    ],
+    accessibility: [
+      "Non-interactive mode for scripted use",
+      "One-line, plain-text syntax errors",
+    ],
+    security: [
+      "Fixed compile-time limits reported as syntax errors, not crashes",
+      "No variable expansion, globbing, or command substitution to misinterpret input",
+      "Sanitizer-verified memory behavior",
+    ],
+    limitations: [
+      "Linux and WSL2 only",
+      "No job control, fg/bg, or Ctrl-Z",
+      "No variables, globbing, &&/||, or command substitution",
+      "No history or line editing",
+      "Not Bash-compatible",
+    ],
+    futureWork: [
+      "Add single quotes and backslash escapes to the grammar",
+      "Add ; and &&/|| sequencing with explicit exit-status rules",
+      "Explore full job control with tcsetpgrp() as a separate scoped step",
+    ],
+    resumeBullets: [
+      "Built a POSIX shell in C with multi-stage pipelines, redirection, background jobs, and zombie-free child reaping from fork, execvp, pipe, dup2, waitpid, and sigaction.",
+      "Verified behavior with 41 functional tests, pty-driven signal tests, a file-descriptor and zombie regression test, and a clean ASan/UBSan run.",
+    ],
+    interviewTopics: [
+      "Why cd cannot run in a child process",
+      "What happens when a pipe write end is left open",
+      "Why children reset signal dispositions before exec",
+      "How SIGCHLD is kept from racing foreground waitpid",
+    ],
+    engineeringTakeaways: [
+      "Closing every unused pipe descriptor in every process removes an entire class of pipeline deadlocks.",
+      "A command's placement matters: state-changing builtins must run in the shell itself, so the shell rejects them where fork semantics would be ambiguous.",
+      "Signal behavior needs its own tests, including a real keystroke through a pty, because unit-level checks cannot prove terminal interaction.",
+    ],
+    images: [
+      {
+        id: "arcshell-system-diagram",
+        src: "/images/projects/arcshell/system-diagram.svg",
+        alt: "ArcShell system diagram showing a raw input line flowing through tokenize and parse_line into a pipeline, then either run_builtin in the shell process or execute_pipeline with fork, dup2, and execvp per stage.",
+        width: 1600,
+        height: 960,
+        caption: "Parser to executor flow",
+        role: "diagram",
+      },
+    ],
+    links: [
+      {
+        label: "View source on GitHub",
+        href: "https://github.com/Arcamet/ArcShell",
+        kind: "source",
+      },
+    ],
+    seo: {
+      title: "ArcShell Case Study — Jose Carlos Arce Camet",
+      description:
+        "A small POSIX shell in C with pipelines, redirection, background jobs, zombie-free reaping, and a tested signal model.",
+    },
+  },
+  {
+    slug: "thermalguard",
+    rank: 8,
+    name: "ThermalGuard",
+    category: "Embedded systems",
+    year: "2026",
+    status: "in-progress",
+    tagline:
+      "Fault-tolerant cooling-controller firmware for the Arduino Mega 2560, with verified control logic and hardware bring-up still ahead.",
+    summary:
+      "An in-progress embedded controller with dual temperature sensors, an asymmetric fault-handling state machine, and a line-based serial protocol. The firmware logic and host harness are verified in software; no physical hardware bring-up has happened yet.",
+    role: "Interface contract, state-machine design, firmware, native test suite, and Rust host harness.",
+    featured: false,
+    accent: "sky",
+    evidenceLabel: "Fault-tolerant control logic",
+    stack: ["C++", "Arduino Mega 2560", "Rust", "CMake", "GitHub Actions"],
+    highlights: [
+      "In progress — no hardware bring-up yet",
+      "Firmware logic: 50/50 native checks",
+      "Host harness: 13/13 Rust tests",
+      "Four-state fault FSM",
+    ],
+    overview: [
+      "ThermalGuard is a cooling controller for an Arduino Mega 2560 that reads a DHT11 and a thermistor, drives a fan through an L293D, and reports state over USB serial. It is designed to degrade and fail safe when sensors disagree, drop out, or report over-temperature.",
+      "The project is in progress. Its interface contract is frozen, the control logic is implemented and verified natively, and the host harness is verified against a mock peer. Physical hardware bring-up has not started.",
+    ],
+    problem: [
+      "A cooling controller that trusts a single sensor can fail silently. Sensor dropouts, disagreement, and over-temperature each need a defined response, and those responses need to be testable before any hardware is wired.",
+    ],
+    solution: [
+      "ThermalGuard separates an Arduino-independent state-machine core from the sketch that talks to pins, so the fault policy can be compiled and tested natively with deterministic input sequences. A Rust harness speaks the same serial grammar against a mock peer today and is structured to target a real serial port later.",
+    ],
+    features: [
+      {
+        title: "Asymmetric fault FSM",
+        description:
+          "NORMAL, DEGRADED, FAULT, and SAFE states with fast escalation and slow, persistence-gated recovery.",
+      },
+      {
+        title: "Conservative temperature",
+        description:
+          "Control and over-temperature checks use the hotter valid reading, or the surviving sensor when one is invalid.",
+      },
+      {
+        title: "Line-based serial protocol",
+        description:
+          "Sequenced EVENT and STATUS lines, PING/PONG liveness, and NACKs for malformed input instead of silent drops.",
+      },
+      {
+        title: "Separated evidence tiers",
+        description:
+          "Native firmware-logic tests, mock-peer harness tests, and real-hardware runs are tracked as distinct kinds of evidence.",
+      },
+    ],
+    architecture: {
+      summary:
+        "The sketch handles pins, sensor reads, the serial grammar, and the watchdog. All state and fan decisions come from fw_logic, a plain C++ core with no Arduino headers that builds both inside the sketch and natively for tests.",
+      nodes: [
+        {
+          id: "sensors",
+          label: "DHT11 + thermistor",
+          description: "Two independent temperature sources.",
+          group: "external",
+        },
+        {
+          id: "sketch",
+          label: "Firmware sketch",
+          description: "Pins, sensor reads, serial protocol, and watchdog.",
+          group: "server",
+        },
+        {
+          id: "fsm",
+          label: "fw_logic core",
+          description:
+            "Arduino-independent state machine and fan hysteresis policy.",
+          group: "shared",
+        },
+        {
+          id: "harness",
+          label: "Rust host harness",
+          description:
+            "Protocol parser, timeouts, and scenarios against a mock peer.",
+          group: "client",
+        },
+      ],
+    },
+    challenges: [
+      {
+        title: "Recovery without flapping",
+        description:
+          "Escalation is fast, but every de-escalation path requires five consecutive healthy samples so the controller does not oscillate between states.",
+      },
+      {
+        title: "Keeping evidence honest",
+        description:
+          "Software tests prove transition and protocol logic only. Physical relay fault injection and watchdog behavior are reserved for real-hardware runs that have not happened yet.",
+      },
+    ],
+    decisions: [
+      {
+        title: "Arduino-independent logic core",
+        description:
+          "The state machine has no Arduino or AVR dependencies, so it compiles and runs in native CI.",
+        tradeoff:
+          "Adds a boundary between sketch and logic, but makes the fault policy testable without a board.",
+      },
+      {
+        title: "Frozen interface contract",
+        description:
+          "Pin map, transitions, timing, and serial grammar were written down before implementation.",
+      },
+      {
+        title: "Bench-tunable constants",
+        description:
+          "Over-temperature threshold and hysteresis band are named, labeled defaults pending bench measurement, not final values.",
+      },
+      {
+        title: "Fail-safe bias",
+        description:
+          "SAFE forces the fan on and raises the alarm, and the fan enable line is pulled up so it defaults on before firmware initializes.",
+      },
+    ],
+    testing: [
+      "Firmware logic: 50/50 native checks passing (FW-LOGIC tier)",
+      "Rust host harness: 13/13 tests passing against a mock peer (HOST-MOCK tier)",
+      "Real-hardware tier: not started",
+    ],
+    accessibility: [
+      "Plain-text serial protocol readable in any terminal",
+      "Documented pin map and interface contract",
+    ],
+    security: [
+      "Malformed serial input returns NACK rather than being dropped",
+      "Fault injection honored only in an explicit test mode, with a firmware-enforced time cap",
+    ],
+    limitations: [
+      "No physical hardware bring-up yet",
+      "Over-temperature threshold and hysteresis band not yet chosen",
+      "Relay drive, LCD wiring, and fan supply still to be decided at the bench",
+      "Not a certified safety system",
+      "No claim of operation through power, motor-supply, driver, or wiring failure",
+    ],
+    futureWork: [
+      "Assemble the board and bring up sensors, fan, relay, and serial link",
+      "Run the same harness scenarios against the real serial port",
+      "Measure and set the over-temperature and hysteresis values",
+    ],
+    resumeBullets: [
+      "Designed an Arduino-independent fault-handling state machine for a dual-sensor cooling controller, verified with 50 native firmware-logic checks.",
+      "Built a Rust host harness for the controller's serial protocol, verified with 13 tests against a mock peer; physical hardware bring-up is pending.",
+    ],
+    interviewTopics: [
+      "Why escalation is fast and recovery is slow",
+      "Why the controller uses the hotter valid reading",
+      "What native logic tests can and cannot prove about firmware",
+      "What still needs a real board to verify",
+    ],
+    engineeringTakeaways: [
+      "Pulling decision logic out of the sketch makes an embedded fault policy testable long before hardware is on the bench.",
+      "Asymmetric thresholds—quick to escalate, slow to recover—keep a safety controller conservative without letting it oscillate.",
+      "Naming evidence tiers explicitly keeps software-only verification from being mistaken for hardware validation.",
+    ],
+    images: [
+      {
+        id: "thermalguard-system-diagram",
+        src: "/images/projects/thermalguard/system-diagram.svg",
+        alt: "ThermalGuard design diagram showing sensors feeding firmware glue and an fw_logic state machine that drives a fan and alarm, a Rust harness on USB serial, and evidence tiers with firmware logic and host mock passing and real hardware not started.",
+        width: 1600,
+        height: 960,
+        caption: "Design diagram and evidence tiers",
+        role: "diagram",
+      },
+    ],
+    links: [],
+    evidenceBoundary: {
+      summary:
+        "ThermalGuard is in progress. Its control logic and host tooling are verified in software only; no physical hardware bring-up has taken place.",
+      verified: [
+        "Firmware state-machine logic compiled natively: 50/50 checks passing",
+        "Rust host harness: 13/13 tests passing against a mock serial peer",
+      ],
+      notYetVerified: [
+        "Any behavior on a physical Arduino Mega 2560",
+        "Real sensor readings, fan drive, and relay switching",
+        "Watchdog reset behavior under a hung main loop",
+        "Chosen over-temperature and hysteresis values",
+      ],
+    },
+    seo: {
+      title: "ThermalGuard Case Study (In Progress) — Jose Carlos Arce Camet",
+      description:
+        "In-progress Arduino Mega 2560 cooling-controller firmware with verified native state-machine tests and a Rust host harness; hardware bring-up has not started.",
+    },
+  },
 ];
 
 export const orderedProjects = [...projects].sort((a, b) => a.rank - b.rank);

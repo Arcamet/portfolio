@@ -1,12 +1,18 @@
 export type ProjectStatus =
-  "portfolio-ready" | "release-prep" | "source-published" | "live";
+  | "portfolio-ready"
+  | "release-prep"
+  | "source-published"
+  | "live"
+  | "in-progress";
 
 export type ProjectCategory =
   | "AI application"
   | "Audio system"
   | "Finance product"
   | "Workflow software"
-  | "Interactive frontend";
+  | "Interactive frontend"
+  | "Systems software"
+  | "Embedded systems";
 
 export interface ProjectLink {
   label: string;
@@ -21,7 +27,7 @@ export interface ProjectImage {
   width: number;
   height: number;
   caption: string;
-  role: "card" | "hero" | "gallery" | "mobile" | "study";
+  role: "card" | "hero" | "gallery" | "mobile" | "study" | "diagram";
 }
 
 export interface FutureProjectImage {
@@ -40,6 +46,12 @@ export interface ArchitectureNode {
   label: string;
   description: string;
   group: "client" | "shared" | "server" | "data" | "external";
+}
+
+export interface EvidenceBoundary {
+  summary: string;
+  verified: string[];
+  notYetVerified: string[];
 }
 
 export interface Project {
@@ -77,6 +89,7 @@ export interface Project {
   engineeringTakeaways: string[];
   images: ProjectImage[];
   futureImages?: FutureProjectImage[];
+  evidenceBoundary?: EvidenceBoundary;
   links: ProjectLink[];
   seo: {
     title: string;

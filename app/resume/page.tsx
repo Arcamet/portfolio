@@ -94,7 +94,7 @@ export default function ResumePage() {
           <section aria-labelledby="project-highlights-title">
             <span className="meta-label">03 / Selected project highlights</span>
             <h2 id="project-highlights-title">
-              Evidence from five engineered systems.
+              Evidence from eight engineered systems.
             </h2>
             <div className="resume-projects">
               {orderedProjects.map((project) => (

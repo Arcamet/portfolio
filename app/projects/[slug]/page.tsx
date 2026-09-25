@@ -18,6 +18,7 @@ const statusLabels = {
   "release-prep": "Release preparation",
   "source-published": "Source published",
   live: "Live",
+  "in-progress": "In progress",
 } as const;
 
 export function generateStaticParams() {
@@ -95,7 +96,13 @@ export default async function ProjectPage({
   const project = getProject(slug);
   if (!project) notFound();
   const related = getRelatedProject(project);
-  const hasGallery = project.images.some((image) => image.role !== "study");
+  const hasGallery = project.images.some(
+    (image) => image.role !== "study" && image.role !== "diagram",
+  );
+  const projectCount = String(orderedProjects.length).padStart(2, "0");
+  const hasLongTitleWord = project.name
+    .split(" ")
+    .some((word) => word.length > 10);
   const softwareData = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -115,13 +122,20 @@ export default async function ProjectPage({
           <div className="case-index">
             <span>Case study</span>
             <strong>0{project.rank}</strong>
-            <span>of 05</span>
+            <span>of {projectCount}</span>
           </div>
           <div className="case-hero-copy">
             <p className="eyebrow">
               {project.category} · {statusLabels[project.status]}
             </p>
-            <h1>{project.name}</h1>
+            {project.status === "in-progress" ? (
+              <p className="status-badge status-badge-large">
+                {statusLabels[project.status]}
+              </p>
+            ) : null}
+            <h1 className={hasLongTitleWord ? "case-title-long" : undefined}>
+              {project.name}
+            </h1>
             <p className="case-tagline">{project.tagline}</p>
             <p>{project.summary}</p>
             <div className="case-actions">
@@ -163,6 +177,42 @@ export default async function ProjectPage({
         </header>
 
         <div className="case-body shell">
+          {project.evidenceBoundary ? (
+            <section
+              className="case-section evidence-boundary"
+              id="evidence"
+              aria-labelledby="evidence-title"
+            >
+              <div className="case-section-label">
+                <span>00</span>
+                <span>Evidence boundary</span>
+              </div>
+              <div className="case-section-content">
+                <h2 id="evidence-title">What is verified, and what is not.</h2>
+                <p className="section-lede">
+                  {project.evidenceBoundary.summary}
+                </p>
+                <div className="evidence-boundary-grid">
+                  <article>
+                    <h3>Verified</h3>
+                    <ul>
+                      {project.evidenceBoundary.verified.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </article>
+                  <article className="evidence-boundary-open">
+                    <h3>Not yet verified</h3>
+                    <ul>
+                      {project.evidenceBoundary.notYetVerified.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </article>
+                </div>
+              </div>
+            </section>
+          ) : null}
           <TextSection
             id="overview"
             index="01"

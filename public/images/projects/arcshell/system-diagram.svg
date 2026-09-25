@@ -1,0 +1,39 @@
+<svg width="1600" height="960" viewBox="0 0 1600 960" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArcShell system diagram">
+  <defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#6B7C92"/></marker></defs>
+  <rect width="1600" height="960" rx="32" fill="#071019"/>
+  <rect x="44" y="44" width="10" height="92" rx="5" fill="#B8E07A"/>
+  <text x="82" y="92" fill="white" font-family="Arial, sans-serif" font-size="44" font-weight="700">ArcShell</text>
+  <text x="82" y="130" fill="#7F92AB" font-family="Arial, sans-serif" font-size="24">Parser → executor flow for a small POSIX shell in C</text>
+  <rect x="80" y="200" width="300" height="110" rx="22" fill="#0D1622" stroke="#243041" stroke-width="2"/>
+  <text x="230.0" y="253.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">Raw line</text>
+  <text x="230.0" y="291.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">stdin, tty or script</text>
+  <line x1="380" y1="255" x2="470" y2="255" stroke="#4B5B70" stroke-width="4" marker-end="url(#a)"/>
+  <rect x="470" y="200" width="300" height="110" rx="22" fill="#0D1622" stroke="#243041" stroke-width="2"/>
+  <text x="620.0" y="253.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">tokenize()</text>
+  <text x="620.0" y="291.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">words, quotes, operators</text>
+  <line x1="770" y1="255" x2="860" y2="255" stroke="#4B5B70" stroke-width="4" marker-end="url(#a)"/>
+  <rect x="860" y="200" width="300" height="110" rx="22" fill="#0D1622" stroke="#243041" stroke-width="2"/>
+  <text x="1010.0" y="253.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">parse_line()</text>
+  <text x="1010.0" y="291.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">syntax errors, no crash</text>
+  <line x1="1160" y1="255" x2="1250" y2="255" stroke="#4B5B70" stroke-width="4" marker-end="url(#a)"/>
+  <rect x="1250" y="200" width="270" height="110" rx="22" fill="#0D1622" stroke="#B8E07A" stroke-width="3"/>
+  <text x="1385.0" y="253.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">Pipeline</text>
+  <text x="1385.0" y="291.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">Command[], background</text>
+  <line x1="1385" y1="310" x2="1385" y2="400" stroke="#4B5B70" stroke-width="4" marker-end="url(#a)"/>
+  <rect x="900" y="400" width="620" height="110" rx="22" fill="#0D1622" stroke="#243041" stroke-width="2"/>
+  <text x="1210.0" y="465.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">Builtin, alone, in foreground?</text>
+  <line x1="1000" y1="510" x2="560" y2="610" stroke="#4B5B70" stroke-width="4" marker-end="url(#a)"/>
+  <text x="792.0" y="550.0" fill="#7F92AB" font-family="Arial, sans-serif" font-size="20">yes</text>
+  <line x1="1300" y1="510" x2="1300" y2="610" stroke="#4B5B70" stroke-width="4" marker-end="url(#a)"/>
+  <text x="1312.0" y="550.0" fill="#7F92AB" font-family="Arial, sans-serif" font-size="20">no</text>
+  <rect x="160" y="610" width="640" height="150" rx="22" fill="#0D1622" stroke="#243041" stroke-width="2"/>
+  <text x="480.0" y="683.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">run_builtin()</text>
+  <text x="480.0" y="721.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">cd / pwd / exit in the shell process</text>
+  <text x="480.0" y="751.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">state belongs to the shell</text>
+  <rect x="900" y="610" width="620" height="150" rx="22" fill="#0D1622" stroke="#B8E07A" stroke-width="3"/>
+  <text x="1210.0" y="683.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">execute_pipeline()</text>
+  <text x="1210.0" y="721.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">N−1 pipes, fork + dup2 + execvp per stage</text>
+  <text x="1210.0" y="751.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">every child closes every pipe fd</text>
+  <text x="800" y="850" fill="#C4CBD3" font-family="Arial, sans-serif" font-size="22" text-anchor="middle">signals: shell survives SIGINT/SIGQUIT · children reset to SIG_DFL · SIGCHLD blocked around foreground wait</text>
+  <text x="800" y="890" fill="#C4CBD3" font-family="Arial, sans-serif" font-size="22" text-anchor="middle">background jobs: own process group via setpgid() · reaped by SIGCHLD handler</text>
+</svg>

@@ -1,0 +1,36 @@
+<svg width="1600" height="960" viewBox="0 0 1600 960" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RustKV system diagram">
+  <defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#6B7C92"/></marker></defs>
+  <rect width="1600" height="960" rx="32" fill="#071019"/>
+  <rect x="44" y="44" width="10" height="92" rx="5" fill="#F0A36B"/>
+  <text x="82" y="92" fill="white" font-family="Arial, sans-serif" font-size="44" font-weight="700">RustKV</text>
+  <text x="82" y="130" fill="#7F92AB" font-family="Arial, sans-serif" font-size="24">Request path from TCP frame to durable append-only log</text>
+  <rect x="80" y="210" width="400" height="120" rx="22" fill="#0D1622" stroke="#243041" stroke-width="2"/>
+  <text x="280.0" y="268.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">rustkv-cli / client</text>
+  <text x="280.0" y="306.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">length-prefixed TCP frames</text>
+  <line x1="480" y1="270" x2="600" y2="270" stroke="#4B5B70" stroke-width="4" marker-end="url(#a)"/>
+  <rect x="600" y="210" width="420" height="120" rx="22" fill="#0D1622" stroke="#F0A36B" stroke-width="3"/>
+  <text x="810.0" y="268.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">Connection thread</text>
+  <text x="810.0" y="306.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">capped admission, 1 per client</text>
+  <line x1="1020" y1="270" x2="1120" y2="270" stroke="#4B5B70" stroke-width="4" marker-end="url(#a)"/>
+  <rect x="1120" y="210" width="400" height="120" rx="22" fill="#0D1622" stroke="#243041" stroke-width="2"/>
+  <text x="1320.0" y="268.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">Codec → executor</text>
+  <text x="1320.0" y="306.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">1 MiB versioned protocol</text>
+  <line x1="1320" y1="330" x2="1320" y2="420" stroke="#4B5B70" stroke-width="4" marker-end="url(#a)"/>
+  <rect x="560" y="420" width="1000" height="110" rx="22" fill="#0D1622" stroke="#F0A36B" stroke-width="3"/>
+  <text x="1060.0" y="473.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">Arc&lt;Database&gt;</text>
+  <text x="1060.0" y="511.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">shared state, documented lock order</text>
+  <line x1="700" y1="530" x2="420" y2="640" stroke="#4B5B70" stroke-width="4" marker-end="url(#a)"/>
+  <line x1="1060" y1="530" x2="1060" y2="640" stroke="#4B5B70" stroke-width="4" marker-end="url(#a)"/>
+  <line x1="1460" y1="530" x2="1460" y2="640" stroke="#4B5B70" stroke-width="4" marker-end="url(#a)"/>
+  <rect x="160" y="640" width="520" height="130" rx="22" fill="#0D1622" stroke="#243041" stroke-width="2"/>
+  <text x="420.0" y="703.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">RwLock&lt;Store&gt;</text>
+  <text x="420.0" y="741.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">binary-safe keys/values, TTL</text>
+  <rect x="800" y="640" width="520" height="130" rx="22" fill="#0D1622" stroke="#243041" stroke-width="2"/>
+  <text x="1060.0" y="703.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">Mutex&lt;AppendLog&gt;</text>
+  <text x="1060.0" y="741.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">CRC32 records, sync_data</text>
+  <rect x="1360" y="640" width="200" height="130" rx="22" fill="#0D1622" stroke="#243041" stroke-width="2"/>
+  <text x="1460.0" y="703.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">Metrics</text>
+  <text x="1460.0" y="741.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">atomics, STATS</text>
+  <line x1="1060" y1="770" x2="1060" y2="830" stroke="#4B5B70" stroke-width="4" marker-end="url(#a)"/>
+  <text x="1060" y="880" fill="#C4CBD3" font-family="Arial, sans-serif" font-size="22" text-anchor="middle">disk: ordered replay · torn-tail repair · fail-closed corruption · crash-conscious compaction</text>
+</svg>

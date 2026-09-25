@@ -56,7 +56,7 @@ export default function Home() {
             </h1>
             <div className="hero-copy-grid">
               <div className="hero-marker" aria-hidden="true">
-                01—05
+                01—{String(orderedProjects.length).padStart(2, "0")}
               </div>
               <div>
                 <p className="hero-lede">
@@ -97,9 +97,9 @@ export default function Home() {
         >
           <SectionHeading
             index="01"
-            eyebrow="Selected work / five systems"
+            eyebrow="Selected work / eight systems"
             title="Different products. One engineering practice."
-            description="Each project isolates a different kind of risk—from AI context and audio validation to financial correctness, workflow modeling, and keyboard interaction."
+            description="Each project isolates a different kind of risk—from AI context and audio validation to financial correctness, workflow modeling, and keyboard interaction, down to storage durability, process control, and sensor-fault handling."
           />
           <div className="project-grid">
             {orderedProjects.map((project) => (

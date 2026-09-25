@@ -48,6 +48,9 @@ test("server-renders a case study and secondary routes", async () => {
     "/projects/personal-finance-tracker",
     "/projects/intern-hunt-crm",
     "/projects/local-matchroom",
+    "/projects/rustkv",
+    "/projects/arcshell",
+    "/projects/thermalguard",
     "/about",
     "/resume",
     "/404",
@@ -74,6 +77,12 @@ test("renders verified galleries and keeps internal notes private", async () => 
   const internHunt = await (await render("/projects/intern-hunt-crm")).text();
   assert.match(internHunt, /Interface study/);
   assert.doesNotMatch(internHunt, /id="gallery"/);
+
+  const thermalGuard = await (await render("/projects/thermalguard")).text();
+  assert.match(thermalGuard, /class="status-badge status-badge-large"/);
+  assert.match(thermalGuard, /Evidence boundary/);
+  assert.match(thermalGuard, /No physical hardware bring-up yet/);
+  assert.doesNotMatch(thermalGuard, /id="gallery"/);
 
   const resume = await (await render("/resume")).text();
   assert.doesNotMatch(resume, /Résumé bullets|Interview topics/);

@@ -1,0 +1,42 @@
+<svg width="1600" height="960" viewBox="0 0 1600 960" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ThermalGuard system diagram">
+  <defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#6B7C92"/></marker></defs>
+  <rect width="1600" height="960" rx="32" fill="#071019"/>
+  <rect x="44" y="44" width="10" height="92" rx="5" fill="#86B9FF"/>
+  <text x="82" y="92" fill="white" font-family="Arial, sans-serif" font-size="44" font-weight="700">ThermalGuard</text>
+  <text x="82" y="130" fill="#7F92AB" font-family="Arial, sans-serif" font-size="24">Design diagram · in progress · no hardware bring-up yet</text>
+  <rect x="80" y="200" width="380" height="120" rx="22" fill="#0D1622" stroke="#243041" stroke-width="2"/>
+  <text x="270.0" y="258.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">DHT11 + thermistor</text>
+  <text x="270.0" y="296.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">dual temperature sources</text>
+  <line x1="460" y1="260" x2="560" y2="260" stroke="#4B5B70" stroke-width="4" marker-end="url(#a)"/>
+  <rect x="560" y="200" width="480" height="120" rx="22" fill="#0D1622" stroke="#243041" stroke-width="2"/>
+  <text x="800.0" y="258.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">firmware.ino glue</text>
+  <text x="800.0" y="296.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">pins, sensor reads, serial, WDT</text>
+  <line x1="800" y1="320" x2="800" y2="400" stroke="#4B5B70" stroke-width="4" marker-end="url(#a)"/>
+  <rect x="460" y="400" width="680" height="150" rx="22" fill="#0D1622" stroke="#86B9FF" stroke-width="3"/>
+  <text x="800.0" y="473.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">fw_logic FSM core</text>
+  <text x="800.0" y="511.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">NORMAL · DEGRADED · FAULT · SAFE</text>
+  <text x="800.0" y="541.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">Arduino-independent C++</text>
+  <line x1="1140" y1="475" x2="1230" y2="475" stroke="#4B5B70" stroke-width="4" marker-end="url(#a)"/>
+  <rect x="1230" y="400" width="300" height="150" rx="22" fill="#0D1622" stroke="#243041" stroke-width="2"/>
+  <text x="1380.0" y="473.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">Fan + alarm</text>
+  <text x="1380.0" y="511.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">L293D fan channel</text>
+  <text x="1380.0" y="541.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">buzzer on SAFE</text>
+  <line x1="1040" y1="260" x2="1230" y2="260" stroke="#4B5B70" stroke-width="4" marker-end="url(#a)"/>
+  <text x="1135" y="246" fill="#7F92AB" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">USB serial</text>
+  <rect x="1230" y="200" width="300" height="120" rx="22" fill="#0D1622" stroke="#243041" stroke-width="2"/>
+  <text x="1380.0" y="258.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">Rust harness</text>
+  <text x="1380.0" y="296.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">mock peer / serial peer</text>
+  <text x="80" y="640" fill="#C4CBD3" font-family="Arial, sans-serif" font-size="24" font-weight="700">Evidence tiers</text>
+  <rect x="80" y="670" width="450" height="170" rx="22" fill="#0D1622" stroke="#72D59B" stroke-width="3"/>
+  <text x="305.0" y="753.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">FW-LOGIC</text>
+  <text x="305.0" y="791.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">native unit tests</text>
+  <text x="305.0" y="821.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">50/50 checks passing</text>
+  <rect x="575" y="670" width="450" height="170" rx="22" fill="#0D1622" stroke="#72D59B" stroke-width="3"/>
+  <text x="800.0" y="753.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">HOST-MOCK</text>
+  <text x="800.0" y="791.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">Rust harness vs. fake peer</text>
+  <text x="800.0" y="821.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">13/13 tests passing</text>
+  <rect x="1070" y="670" width="450" height="170" rx="22" fill="#0D1622" stroke="#E3BD69" stroke-width="3" stroke-dasharray="14 10"/>
+  <text x="1295.0" y="753.0" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">REAL-HW</text>
+  <text x="1295.0" y="791.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">physical bring-up</text>
+  <text x="1295.0" y="821.0" fill="#9AAAC0" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">not started</text>
+</svg>

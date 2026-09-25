@@ -14,12 +14,12 @@ import {
 } from "../app/content/profile";
 
 describe("portfolio content", () => {
-  it("keeps five projects in unique rank order", () => {
-    expect(projects).toHaveLength(5);
-    expect(new Set(projects.map((project) => project.slug)).size).toBe(5);
-    expect(new Set(projects.map((project) => project.rank)).size).toBe(5);
+  it("keeps eight projects in unique rank order", () => {
+    expect(projects).toHaveLength(8);
+    expect(new Set(projects.map((project) => project.slug)).size).toBe(8);
+    expect(new Set(projects.map((project) => project.rank)).size).toBe(8);
     expect(orderedProjects.map((project) => project.rank)).toEqual([
-      1, 2, 3, 4, 5,
+      1, 2, 3, 4, 5, 6, 7, 8,
     ]);
   });
 
@@ -45,10 +45,14 @@ describe("portfolio content", () => {
         project.images.length,
       );
       expect(
-        project.images.some((image) => ["card", "study"].includes(image.role)),
+        project.images.some((image) =>
+          ["card", "study", "diagram"].includes(image.role),
+        ),
       ).toBe(true);
       expect(
-        project.images.some((image) => ["hero", "study"].includes(image.role)),
+        project.images.some((image) =>
+          ["hero", "study", "diagram"].includes(image.role),
+        ),
       ).toBe(true);
       expect(project.limitations.length).toBeGreaterThan(0);
       expect(project.engineeringTakeaways).toHaveLength(3);
@@ -85,7 +89,25 @@ describe("portfolio content", () => {
       "personal-finance-tracker": "live",
       "intern-hunt-crm": "live",
       "local-matchroom": "live",
+      rustkv: "source-published",
+      arcshell: "source-published",
+      thermalguard: "in-progress",
     });
+    expect(getProject("rustkv")?.links).toEqual([
+      {
+        label: "View source on GitHub",
+        href: "https://github.com/Arcamet/RustKV",
+        kind: "source",
+      },
+    ]);
+    expect(getProject("arcshell")?.links).toEqual([
+      {
+        label: "View source on GitHub",
+        href: "https://github.com/Arcamet/ArcShell",
+        kind: "source",
+      },
+    ]);
+    expect(getProject("thermalguard")?.links).toEqual([]);
     expect(getProject("personal-finance-tracker")?.links).toEqual([
       {
         label: "View live product",
@@ -143,6 +165,21 @@ describe("portfolio content", () => {
       "Activity generation from meaningful changes",
       "Preservation of unsaved edits during data refresh",
     ]);
+  });
+
+  it("keeps ThermalGuard's software-only evidence boundary explicit", () => {
+    const thermalGuard = getProject("thermalguard");
+    expect(thermalGuard?.status).toBe("in-progress");
+    expect(thermalGuard?.evidenceBoundary?.verified).toEqual([
+      "Firmware state-machine logic compiled natively: 50/50 checks passing",
+      "Rust host harness: 13/13 tests passing against a mock serial peer",
+    ]);
+    expect(thermalGuard?.limitations).toContain(
+      "No physical hardware bring-up yet",
+    );
+    expect(JSON.stringify(thermalGuard)).not.toMatch(
+      /tested on hardware|hardware[- ]validated|validated on hardware|HIL|hardware[- ]in[- ]the[- ]loop|field[- ]tested/i,
+    );
   });
 
   it("keeps public copy free of unfinished-state language", () => {

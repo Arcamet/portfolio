@@ -12,7 +12,9 @@ export function ProjectVisual({
 }) {
   const image =
     project.images.find((candidate) => candidate.role === role) ??
-    project.images.find((candidate) => candidate.role === "study");
+    project.images.find((candidate) =>
+      ["study", "diagram"].includes(candidate.role),
+    );
 
   if (!image) return null;
 
@@ -37,7 +39,11 @@ export function ProjectVisual({
       />
       <figcaption>
         <span>
-          {image.role === "study" ? "Interface study" : "Product capture"}
+          {image.role === "study"
+            ? "Interface study"
+            : image.role === "diagram"
+              ? "System diagram"
+              : "Product capture"}
         </span>
         <span>{image.caption}</span>
       </figcaption>

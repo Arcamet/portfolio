@@ -2,7 +2,9 @@ import Image from "next/image";
 import type { Project } from "../content/types";
 
 export function ProjectGallery({ project }: { project: Project }) {
-  const images = project.images.filter((image) => image.role !== "study");
+  const images = project.images.filter(
+    (image) => image.role !== "study" && image.role !== "diagram",
+  );
 
   if (images.length === 0) return null;
 

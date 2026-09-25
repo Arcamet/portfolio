@@ -7,6 +7,9 @@ const projectSlugs = [
   "personal-finance-tracker",
   "intern-hunt-crm",
   "local-matchroom",
+  "rustkv",
+  "arcshell",
+  "thermalguard",
 ];
 
 test("homepage presents identity and project order", async ({ page }) => {
@@ -21,7 +24,13 @@ test("homepage presents identity and project order", async ({ page }) => {
     "Auralis",
     "Intern Hunt CRM",
     "Local Matchroom",
+    "RustKV",
+    "ArcShell",
+    "ThermalGuard",
   ]);
+  await expect(
+    page.locator(".project-card").filter({ hasText: "ThermalGuard" }),
+  ).toContainText("In progress");
   await expect(page.locator('a[href="#"]')).toHaveCount(0);
   await expect(page.locator('img[src^="/_vinext/image"]')).toHaveCount(0);
 });
@@ -58,6 +67,8 @@ test("verified external links disclose new tabs", async ({ page }) => {
     "/projects/personal-finance-tracker",
     "/projects/intern-hunt-crm",
     "/projects/local-matchroom",
+    "/projects/rustkv",
+    "/projects/arcshell",
   ]) {
     await page.goto(path);
     const externalLinks = page.locator('a[href^="https://"]');
@@ -144,7 +155,12 @@ test("phone, tablet, and desktop layouts stay within the viewport", async ({
 }) => {
   for (const width of [390, 768, 1440]) {
     await page.setViewportSize({ width, height: 900 });
-    for (const path of ["/", "/projects/personal-finance-tracker", "/resume"]) {
+    for (const path of [
+      "/",
+      "/projects/personal-finance-tracker",
+      "/projects/thermalguard",
+      "/resume",
+    ]) {
       await page.goto(path);
       expect(
         await page.evaluate(
@@ -196,6 +212,7 @@ for (const path of [
   "/",
   "/projects/yapos",
   "/projects/personal-finance-tracker",
+  "/projects/thermalguard",
   "/about",
   "/resume",
 ]) {

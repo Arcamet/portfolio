@@ -8,6 +8,7 @@ const statusLabels = {
   "release-prep": "Release preparation",
   "source-published": "Source published",
   live: "Live",
+  "in-progress": "In progress",
 } as const;
 
 export function ProjectCard({ project }: { project: Project }) {
@@ -18,7 +19,11 @@ export function ProjectCard({ project }: { project: Project }) {
       <div className="project-card-meta">
         <span>0{project.rank}</span>
         <span>{project.category}</span>
-        <span>{statusLabels[project.status]}</span>
+        {project.status === "in-progress" ? (
+          <span className="status-badge">{statusLabels[project.status]}</span>
+        ) : (
+          <span>{statusLabels[project.status]}</span>
+        )}
       </div>
       <ProjectVisual project={project} compact />
       <div className="project-card-copy">
